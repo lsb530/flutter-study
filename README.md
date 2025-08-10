@@ -4,9 +4,8 @@ A Row and Column Flutter App.
 
 ### Goal
 
-- Row
-- Column
+Row, Column
 - MainAxisAlignment
- - start, end, center, spaceBetween, spaceAround, spaceEvenly
+  - start, end, center, spaceBetween, spaceAround, spaceEvenly
 - CrossAxisAligment
- - start, end, center, stretch, baseline(alphabetic, ideographic)
+  - start, end, center, stretch, baseline(alphabetic, ideographic)
