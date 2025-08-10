@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
+                flex: 2,
                 child: Container(
                   height: 50.0,
                   width: 50.0,
@@ -22,16 +23,19 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
+                flex: 3,
                 child: Container(
                   height: 50.0,
                   width: 50.0,
                   color: Colors.orange,
                 ),
               ),
-              Container(
-                height: 50.0,
-                width: 50.0,
-                color: Colors.yellow,
+              Expanded(
+                child: Container(
+                  height: 50.0,
+                  width: 50.0,
+                  color: Colors.yellow,
+                ),
               ),
             ],
           ),
