@@ -10,7 +10,6 @@ void main() {
 
 // stless: StatelessWidget
 class HomeScreen extends StatelessWidget {
-
   const HomeScreen({super.key});
 
   @override
@@ -19,16 +18,20 @@ class HomeScreen extends StatelessWidget {
       // backgroundColor: Colors.blue,
       // Hex Code: 335CB0
       backgroundColor: Color(0xFF335CB0),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('asset/img/logo.png'),
-          CircularProgressIndicator(
-            color: Colors.white,
-          ),
-        ],
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 32.0,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('asset/img/logo.png'),
+            CircularProgressIndicator(
+              color: Colors.white,
+            ),
+          ],
+        ),
       ),
     );
   }
-
 }
