@@ -14,8 +14,9 @@ class HomeScreen extends StatelessWidget {
           height: double.infinity,
           child: Column(
             children: [
-              Expanded(
+              Flexible(
                 flex: 2,
+                fit: FlexFit.loose, // tight: Same as Expanded
                 child: Container(
                   height: 50.0,
                   width: 50.0,
