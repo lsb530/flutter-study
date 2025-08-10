@@ -1,3 +1,13 @@
-# Flutter Study Repository
+# splash_screen
 
-## branch별로 작업
+A Splash Screen Flutter App.
+
+### Goal
+
+- StatelessWidget
+- Asset Image
+- Colum Widget
+- HexCode Color
+- CircularProgressIndicator Widget
+- Padding Widget
+- SizedBox Widget
