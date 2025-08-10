@@ -10,11 +10,11 @@ class HomeScreen extends StatelessWidget {
         child: Container(
           color: Colors.red,
           child: Padding(
-            padding: EdgeInsets.only(
-              top: 32.0,
-              left: 64.0,
-              right: 16.0,
-              bottom: 128.0,
+            padding: EdgeInsets.fromLTRB(
+              32.0,
+              64.0,
+              16.0,
+              8.0,
             ),
             child: Container(
               color: Colors.blue,
