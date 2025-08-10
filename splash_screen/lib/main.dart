@@ -7,9 +7,11 @@ void main() {
         // backgroundColor: Colors.blue,
         // Hex Code: 335CB0
         backgroundColor: Color(0xFF335CB0),
-        body: Center(
-          // child: Text("Hello Boki"),
-          child: Image.asset('asset/img/logo.png')
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('asset/img/logo.png'),
+          ],
         ),
       ),
     ),
