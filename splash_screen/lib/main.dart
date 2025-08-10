@@ -8,7 +8,7 @@ void main() {
   );
 }
 
-// StatelessWidget
+// stless: StatelessWidget
 class HomeScreen extends StatelessWidget {
 
   const HomeScreen({super.key});
