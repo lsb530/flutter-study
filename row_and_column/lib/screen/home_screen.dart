@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../const/colors.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,30 +8,17 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            // DRY - Do Not Repeat Yourself
-            Container(
-              height: 50.0,
-              width: 50.0,
-              color: Colors.red,
-            ),
-            Container(
-              height: 50.0,
-              width: 50.0,
-              color: Colors.orange,
-            ),
-            Container(
-              height: 50.0,
-              width: 50.0,
-              color: Colors.yellow,
-            ),
-            Container(
-              height: 50.0,
-              width: 50.0,
-              color: Colors.green,
-            ),
-          ],
+        child: Container(
+          color: Colors.black,
+          child: Column(
+            children: colors.map((e) =>
+              Container(
+                height: 50.0,
+                width: 50.0,
+                color: e,
+              ),
+            ).toList(),
+          ),
         ),
       ),
     );
