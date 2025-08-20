@@ -3,6 +3,8 @@ import 'package:blog_web_app/screen/home_screen.dart';
 
 void main() {
   runApp(
-    HomeScreen(),
+    MaterialApp(
+        home: HomeScreen()
+    ),
   );
 }
