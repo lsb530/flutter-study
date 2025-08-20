@@ -24,6 +24,16 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              controller.loadRequest(homeUrl);
+            },
+            icon: Icon(
+              Icons.home,
+            ),
+          ),
+        ],
       ),
       body: WebViewWidget(
         controller: controller,
