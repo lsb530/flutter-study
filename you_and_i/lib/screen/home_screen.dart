@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               _Top(),
+
               /// 이미지
               _Bottom(),
             ],
@@ -30,48 +31,33 @@ class _Top extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
+
     return Expanded(
       child: Container(
         child: Column(
           children: [
             Text(
               'U&I',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'parisienne',
-                fontSize: 80.0,
-              ),
+              style: textTheme.displayLarge,
             ),
             Text(
               '우리 처음 만난날',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'sunflower',
-                fontSize: 30.0,
-              ),
+              style: textTheme.bodyLarge,
             ),
             Text(
               '2022.12.25',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'sunflower',
-                fontSize: 20.0,
-              ),
+              style: textTheme.bodyMedium,
             ),
             IconButton(
               iconSize: 60.0,
-              color: Colors.redAccent,
+              color: Colors.red[300],
               onPressed: () {},
               icon: Icon(Icons.favorite),
             ),
             Text(
               'D+1',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'sunflower',
-                fontWeight: FontWeight.w700,
-                fontSize: 50.0,
-              ),
+              style: textTheme.displayMedium,
             ),
           ],
         ),
