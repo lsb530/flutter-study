@@ -11,20 +11,15 @@ class HomeScreen extends StatelessWidget {
           height: 200,
           width: 200,
           color: Colors.red,
-          child: Container( // 전체 영역 차지
-            height: 50,
-            width: 50,
-            color: Colors.blue,
+          child: Align(
+            // alignment: Alignment.topRight,
+            alignment: Alignment(0.5, -0.5),
+            child: Container( // 전체 영역 차지
+              height: 50,
+              width: 50,
+              color: Colors.blue,
+            ),
           )
-          // child: Row(
-          //   children: [
-          //     Container(
-          //       height: 50,
-          //       width: 50,
-          //       color: Colors.blue,
-          //     ),
-          //   ],
-          // ),
         ),
       ),
     );
