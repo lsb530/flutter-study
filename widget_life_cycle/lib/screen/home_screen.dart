@@ -12,7 +12,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -37,16 +36,51 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class BokiFactoryWidget extends StatelessWidget {
-  const BokiFactoryWidget({super.key});
+class BokiFactoryWidget extends StatefulWidget {
+  BokiFactoryWidget({super.key}) {
+    print('1) Stateful Widget Constructor');
+  }
+
+  @override
+  State<BokiFactoryWidget> createState() {
+    print('2) Stateful Widget Create State');
+
+    return _BokiFactoryWidgetState();
+  }
+}
+
+class _BokiFactoryWidgetState extends State<BokiFactoryWidget> {
+  @override
+  void initState() {
+    print('3) Stateful Widget initState');
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    print('4) Stateful Widget didChangeDependencies');
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-
+    print('5) Stateful Widget build');
     return Container(
       width: 50.0,
       height: 50.0,
       color: Colors.red,
     );
+  }
+
+  @override
+  void deactivate() {
+    print('6) Stateful Widget deactivate');
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    print('7) Stateful Widget dispose');
+    super.dispose();
   }
 }
