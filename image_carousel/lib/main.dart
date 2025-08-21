@@ -1,6 +1,32 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+
+void timerTest() {
+  print('main 함수 실행');
+
+  Timer(Duration(seconds: 2), () {
+    print('2초 뒤에 실행한다!');
+  });
+
+  Timer.periodic(Duration(seconds: 2), (Timer timer) {
+    print('3초 마다 실행한다!');
+  });
+
+  int number = 0;
+  print('number: $number');
+  Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    number++;
+    print('1초 마다 number를 1 증가시키고 5가 되면 종료한다!');
+    print('number: $number');
+
+    if (number == 5) {
+      timer.cancel();
+    }
+  });
+}
 
 void main() {
+  timerTest();
   runApp(const MyApp());
 }
 
