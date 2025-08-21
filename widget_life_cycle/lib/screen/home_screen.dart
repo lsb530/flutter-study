@@ -50,6 +50,8 @@ class BokiFactoryWidget extends StatefulWidget {
 }
 
 class _BokiFactoryWidgetState extends State<BokiFactoryWidget> {
+  Color color = Colors.red;
+
   @override
   void initState() {
     print('3) Stateful Widget initState');
@@ -65,10 +67,18 @@ class _BokiFactoryWidgetState extends State<BokiFactoryWidget> {
   @override
   Widget build(BuildContext context) {
     print('5) Stateful Widget build');
-    return Container(
-      width: 50.0,
-      height: 50.0,
-      color: Colors.red,
+    return GestureDetector(
+      onTap: () {
+        // dirty -> clean
+        setState(() {
+          color = color == Colors.red ? Colors.blue : Colors.red;
+        });
+      },
+      child: Container(
+        color: color,
+        width: 50.0,
+        height: 50.0,
+      ),
     );
   }
 
