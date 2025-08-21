@@ -47,6 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
               dateOrder: DatePickerDateOrder.ymd,
+              initialDateTime: selectedDate,
+              maximumDate: DateTime.now(),
               onDateTimeChanged: (DateTime date) {
                 // print(date);
                 setState(() {
