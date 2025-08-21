@@ -6,6 +6,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.pink[100], // 500이 기본값
       body: SafeArea(
         bottom: false,
         child: SizedBox(
@@ -15,23 +16,53 @@ class HomeScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  color: Colors.red,
                   child: Column(
                     children: [
-                      Text('U&I'),
-                      Text('우리 처음 만난날'),
+                      Text(
+                        'U&I',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'parisienne',
+                          fontSize: 80.0,
+                        ),
+                      ),
+                      Text(
+                        '우리 처음 만난날',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'sunflower',
+                          fontSize: 30.0,
+                        ),
+                      ),
+                      Text(
+                        '2022.12.25',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'sunflower',
+                          fontSize: 20.0,
+                        ),
+                      ),
                       IconButton(
+                        iconSize: 60.0,
+                        color: Colors.redAccent,
                         onPressed: () {},
                         icon: Icon(Icons.favorite),
                       ),
-                      Text('D+1')
+                      Text(
+                        'D+1',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'sunflower',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 50.0,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
               Expanded(
                 child: Container(
-                  color: Colors.blue,
                   child: Image.asset(
                     'asset/img/middle_image.png',
                   ),
