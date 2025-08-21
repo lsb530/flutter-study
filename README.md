@@ -1,3 +1,7 @@
-# Flutter Study Repository
+# StatefulWidget Study
+StatefulWidget
 
-## branch별로 작업
+### Goal
+- StatefulWidget
+- build
+- setState()
