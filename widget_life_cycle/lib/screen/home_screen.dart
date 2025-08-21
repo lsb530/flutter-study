@@ -9,6 +9,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool show = false;
+  Color color = Colors.red;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,16 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (show) BokiFactoryWidget(), // Only can for []
+            if (show) GestureDetector(
+              onTap: () {
+                setState(() {
+                  color = color == Colors.blue ? Colors.red : Colors.blue;
+                });
+              },
+              child: BokiFactoryWidget(
+                color: color,
+              ),
+            ), // Only can for []
             SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: () {
@@ -37,7 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class BokiFactoryWidget extends StatefulWidget {
-  BokiFactoryWidget({super.key}) {
+  final Color color;
+
+  BokiFactoryWidget({
+    super.key,
+    required this.color,
+  }) {
     print('1) Stateful Widget Constructor');
   }
 
@@ -50,8 +65,6 @@ class BokiFactoryWidget extends StatefulWidget {
 }
 
 class _BokiFactoryWidgetState extends State<BokiFactoryWidget> {
-  Color color = Colors.red;
-
   @override
   void initState() {
     print('3) Stateful Widget initState');
@@ -67,18 +80,10 @@ class _BokiFactoryWidgetState extends State<BokiFactoryWidget> {
   @override
   Widget build(BuildContext context) {
     print('5) Stateful Widget build');
-    return GestureDetector(
-      onTap: () {
-        // dirty -> clean
-        setState(() {
-          color = color == Colors.red ? Colors.blue : Colors.red;
-        });
-      },
-      child: Container(
-        color: color,
-        width: 50.0,
-        height: 50.0,
-      ),
+    return Container(
+      color: widget.color,
+      width: 50.0,
+      height: 50.0,
     );
   }
 
