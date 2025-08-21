@@ -27,11 +27,19 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _Top extends StatelessWidget {
+class _Top extends StatefulWidget {
   const _Top({super.key});
 
   @override
+  State<_Top> createState() => _TopState();
+}
+
+class _TopState extends State<_Top> {
+  DateTime selectedDate = DateTime.now();
+
+  @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
     var textTheme = Theme.of(context).textTheme;
 
     return Expanded(
@@ -47,7 +55,8 @@ class _Top extends StatelessWidget {
               style: textTheme.bodyLarge,
             ),
             Text(
-              '2022.12.25',
+              // '2022.12.25',
+              '${selectedDate.year}.${selectedDate.month}.${selectedDate.day}',
               style: textTheme.bodyMedium,
             ),
             IconButton(
@@ -67,7 +76,10 @@ class _Top extends StatelessWidget {
                           mode: CupertinoDatePickerMode.date,
                           dateOrder: DatePickerDateOrder.ymd,
                           onDateTimeChanged: (DateTime date) {
-                            print(date);
+                            // print(date);
+                            setState(() {
+                              selectedDate = date;
+                            });
                           },
                         ),
                       ),
@@ -78,7 +90,8 @@ class _Top extends StatelessWidget {
               icon: Icon(Icons.favorite),
             ),
             Text(
-              'D+1',
+              // 'D+1',
+              'D+${now.difference(selectedDate).inDays + 1}',
               style: textTheme.displayMedium,
             ),
           ],
