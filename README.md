@@ -1,17 +1,14 @@
-# Flutter Study Repository
+# StatelessWidget, StatefulWidget Lifecycle
 
-## branch별로 작업
+## StatelessWidget
+1. Constructor
+2. build
 
-## create flutter project for only mobile without linux, macos, windows, web
-```shell
-flutter create --platforms ios,android [프로젝트 이름]
-```
-
-## formatter
-- analysis_options.yaml
-append this under include..
-```yaml
-formatter:
-  trailing_commas: preserve
-  page_width: 80
-```
+## StatefulWidget
+1. Constructor
+2. Create State
+3. initState
+4. didChangeDependencies
+5. build
+6. deactivate
+7. dispose
