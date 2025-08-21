@@ -6,10 +6,13 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Image.asset(
-          'asset/img/image_1.jpeg',
-        ),
+      body: PageView(
+        children: [1,2,3,4,5].map((e) =>
+          Image.asset(
+            'asset/img/image_$e.jpeg',
+            fit: BoxFit.cover,
+          ),
+        ).toList(),
       ),
     );
   }
