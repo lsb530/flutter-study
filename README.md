@@ -5,6 +5,7 @@
 - Constraints Go Down
 - Sizes Go Up
 - Parent Sets Position
+- Alignment
 
 ### Property
 1. Max Height
