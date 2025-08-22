@@ -3,7 +3,12 @@ import 'package:random_number_generator/component/number_to_image.dart';
 import 'package:random_number_generator/constant/color.dart';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({super.key});
+  final int maxNumber;
+
+  const SettingScreen({
+    required this.maxNumber,
+    super.key
+  });
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
@@ -11,6 +16,13 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   double maxNumber = 1000;
+
+  @override
+  void initState() {
+    super.initState();
+
+    maxNumber = widget.maxNumber.toDouble();
+  }
 
   @override
   Widget build(BuildContext context) {
