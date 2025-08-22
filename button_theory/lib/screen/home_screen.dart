@@ -129,14 +129,34 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 */
-
                 shape: CircleBorder(
-                  eccentricity: 0.3 // 0~1
+                  eccentricity: 0.3, // 0~1
                 ),
               ),
               child: Text(
                 'Outlined Button Shape',
               ),
+            ),
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: Icon(
+                Icons.keyboard_alt_outlined,
+              ),
+              label: Text('키보드'),
+            ),
+            TextButton.icon(
+              onPressed: () {},
+              icon: Icon(
+                Icons.keyboard_alt_outlined,
+              ),
+              label: Text('키보드'),
+            ),
+            OutlinedButton.icon(
+              onPressed: () {},
+              icon: Icon(
+                Icons.keyboard_alt_outlined,
+              ),
+              label: Text('키보드'),
             ),
           ],
         ),
