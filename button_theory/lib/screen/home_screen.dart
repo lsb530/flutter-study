@@ -101,6 +101,43 @@ class HomeScreen extends StatelessWidget {
               ),
               child: Text('Text Button'),
             ),
+            OutlinedButton(
+              onPressed: () {},
+              style: OutlinedButton.styleFrom(
+                // shape: StadiumBorder(), // default
+
+                /*
+                shape: RoundedRectangleBorder( // 직사각형 + radius
+                  borderRadius: BorderRadius.circular(
+                    15.0,
+                  ),
+                ),
+                */
+
+                /*
+                shape: BeveledRectangleBorder( // 마름모 + radius
+                  borderRadius: BorderRadius.circular(
+                    20.0,
+                  ),
+                ),
+                */
+
+                /*
+                shape: ContinuousRectangleBorder( // RoundedRectangleBorder 보다 적은 수치로 적용됨
+                  borderRadius: BorderRadius.circular(
+                    32.0,
+                  ),
+                ),
+                */
+
+                shape: CircleBorder(
+                  eccentricity: 0.3 // 0~1
+                ),
+              ),
+              child: Text(
+                'Outlined Button Shape',
+              ),
+            ),
           ],
         ),
       ),
