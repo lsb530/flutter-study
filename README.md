@@ -8,4 +8,4 @@
 - initState(), dispose()
 - StateBar Theme
 
-![app.gif](image_carousel/img/app.gif)
+<img src="image_carousel/img/app.gif" width="300" height="500" alt="">
