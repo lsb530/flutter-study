@@ -41,10 +41,19 @@ class HomeScreen extends StatelessWidget {
             ),
             OutlinedButton(
               onPressed: () {},
+              // ElevatedButton의 모든 속성들을 가져다 쓸 수 있다.
+              style: OutlinedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.red,
+              ),
               child: Text('Outlined Button'),
             ),
             TextButton(
               onPressed: () {},
+              // ElevatedButton의 모든 속성들을 가져다 쓸 수 있다.
+              style: TextButton.styleFrom(
+
+              ),
               child: Text('Text Button'),
             ),
           ],
