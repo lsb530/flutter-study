@@ -69,22 +69,15 @@ class _Body extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            children: ['1', '2', '3']
-                .map((e) => Text(e, style: TextStyle(color: Colors.white)))
-                .toList(),
-          ),
-          Row(
-            children: ['4', '5', '6']
-                .map((e) => Text(e, style: TextStyle(color: Colors.white)))
-                .toList(),
-          ),
-          Row(
-            children: ['7', '8', '9']
-                .map((e) => Text(e, style: TextStyle(color: Colors.white)))
-                .toList(),
-          ),
-        ],
+          [1, 2, 3],
+          [4, 5, 6],
+          [7, 8, 9],
+        ].map((e) =>
+          Row(children: e.map((number) =>
+            Text(number.toString(), style: TextStyle(color: Colors.white)))
+            .toList()
+          )
+        ).toList(),
       ),
     );
   }
