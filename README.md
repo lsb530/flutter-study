@@ -11,3 +11,5 @@ A Splash Screen Flutter App.
 - CircularProgressIndicator Widget
 - Padding Widget
 - SizedBox Widget
+
+![app_img](./splash_screen/img/app.png)
