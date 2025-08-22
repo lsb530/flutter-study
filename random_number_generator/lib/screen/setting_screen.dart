@@ -25,13 +25,22 @@ class _SettingScreenState extends State<SettingScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _Number(maxNumber: maxNumber),
-              _Slider(),
+              _Slider(
+                value: maxNumber,
+                onChanged: onSliderChanged,
+              ),
               _Button(),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void onSliderChanged(double value) {
+    setState(() {
+      maxNumber = value;
+    });
   }
 }
 
@@ -53,11 +62,25 @@ class _Number extends StatelessWidget {
 }
 
 class _Slider extends StatelessWidget {
-  const _Slider({super.key});
+  final double value;
+  final ValueChanged<double> onChanged;
+
+  const _Slider({
+    required this.value,
+    required this.onChanged,
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Slider(
+      value: value,
+      min: 1000,
+      max: 100_000,
+      inactiveColor: blueColor,
+      activeColor: redColor,
+      onChanged: onChanged,
+    );
   }
 }
 
