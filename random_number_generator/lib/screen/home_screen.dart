@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:random_number_generator/constant/color.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<int> numbers = [
+    123,
+    456,
+    789
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +31,22 @@ class HomeScreen extends StatelessWidget {
               _Header(),
 
               /// 숫자
-              _Body(),
+              _Body(
+                numbers: numbers
+              ),
 
               /// 버튼
-              _Footer(),
+              _Footer(
+                onPressed: () {
+                  setState(() {
+                    numbers = [
+                      999,
+                      888,
+                      777
+                    ];
+                  });
+                }
+              ),
             ],
           ),
         ),
@@ -61,18 +84,19 @@ class _Header extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({super.key});
+  final List<int> numbers;
+
+  const _Body({
+    required this.numbers,
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          123,
-          456,
-          789,
-        ]
+        children: numbers
           .map((numbers) => numbers.toString().split('')).toList()
           .map((e) =>
             Row(children: e.map((number) =>
@@ -90,7 +114,12 @@ class _Body extends StatelessWidget {
 }
 
 class _Footer extends StatelessWidget {
-  const _Footer({super.key});
+  final VoidCallback onPressed;
+
+  const _Footer({
+    required this.onPressed,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +128,7 @@ class _Footer extends StatelessWidget {
         backgroundColor: redColor,
         foregroundColor: Colors.white,
       ),
-      onPressed: () {},
+      onPressed: onPressed,
       child: Text('생성하기!'),
     );
   }
