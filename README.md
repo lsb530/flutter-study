@@ -7,3 +7,5 @@
 - map()
 - initState(), dispose()
 - StateBar Theme
+
+![app.gif](image_carousel/img/app.gif)
