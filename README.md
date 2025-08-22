@@ -1,17 +1,8 @@
-# Flutter Study Repository
+# Random Number Generator
+쓸데없이 이쁜 랜덤숫자 생성기
 
-## branch별로 작업
-
-## create flutter project for only mobile without linux, macos, windows, web
-```shell
-flutter create --platforms ios,android [프로젝트 이름]
-```
-
-## formatter
-- analysis_options.yaml
-append this under include..
-```yaml
-formatter:
-  trailing_commas: preserve
-  page_width: 80
-```
+## Goals
+- 난수 생성
+- 하나 이상의 페이지 사용
+- Slider
+- 복잡한 map() 함수 사용
