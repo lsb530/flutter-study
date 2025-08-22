@@ -69,8 +69,35 @@ class HomeScreen extends StatelessWidget {
             TextButton(
               onPressed: () {},
               // ElevatedButton의 모든 속성들을 가져다 쓸 수 있다.
-              style: TextButton.styleFrom(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.resolveWith(
+                  // (Set<MaterialState> states) {
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.pressed)) {
+                      return Colors.red;
+                    }
 
+                    return Colors.black;
+                  },
+                ),
+                foregroundColor: WidgetStateProperty.resolveWith(
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.pressed)) {
+                      return Colors.black;
+                    }
+
+                    return Colors.white;
+                  },
+                ),
+                minimumSize: WidgetStateProperty.resolveWith(
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.pressed)) {
+                      return Size(200, 150);
+                    }
+
+                    return Size(300, 200);
+                  },
+                ),
               ),
               child: Text('Text Button'),
             ),
