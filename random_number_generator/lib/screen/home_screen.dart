@@ -70,25 +70,19 @@ class _Body extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
-            children: [
-              Text('1', style: TextStyle(color: Colors.white),),
-              Text('2', style: TextStyle(color: Colors.white),),
-              Text('3', style: TextStyle(color: Colors.white),),
-            ],
+            children: ['1', '2', '3']
+                .map((e) => Text(e, style: TextStyle(color: Colors.white)))
+                .toList(),
           ),
           Row(
-            children: [
-              Text('4', style: TextStyle(color: Colors.white),),
-              Text('5', style: TextStyle(color: Colors.white),),
-              Text('6', style: TextStyle(color: Colors.white),),
-            ],
+            children: ['4', '5', '6']
+                .map((e) => Text(e, style: TextStyle(color: Colors.white)))
+                .toList(),
           ),
           Row(
-            children: [
-              Text('7', style: TextStyle(color: Colors.white),),
-              Text('8', style: TextStyle(color: Colors.white),),
-              Text('9', style: TextStyle(color: Colors.white),),
-            ],
+            children: ['7', '8', '9']
+                .map((e) => Text(e, style: TextStyle(color: Colors.white)))
+                .toList(),
           ),
         ],
       ),
