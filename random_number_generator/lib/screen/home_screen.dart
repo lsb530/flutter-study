@@ -16,50 +16,77 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // 제목 & 아이콘
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '랜덤 숫자 생성기',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  IconButton(
-                    color: redColor,
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.settings,
-                    ),
-                  ),
-                ],
-              ),
+              /// 제목 & 아이콘
+              _Header(),
 
-              // 숫자
-              Expanded(
-                child: Text('''
-              123
-              456
-              789
-              '''),
-              ),
+              /// 숫자
+              _Body(),
 
-              // 버튼
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: redColor,
-                  foregroundColor: Colors.white,
-                ),
-                onPressed: () {},
-                child: Text('생성하기!'),
-              ),
+              /// 버튼
+              _Footer(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          '랜덤 숫자 생성기',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        IconButton(
+          color: redColor,
+          onPressed: () {},
+          icon: Icon(
+            Icons.settings,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Text('''
+              123
+              456
+              789
+              '''),
+    );
+  }
+}
+
+class _Footer extends StatelessWidget {
+  const _Footer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: redColor,
+        foregroundColor: Colors.white,
+      ),
+      onPressed: () {},
+      child: Text('생성하기!'),
     );
   }
 }
