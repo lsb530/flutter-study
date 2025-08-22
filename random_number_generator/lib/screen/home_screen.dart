@@ -66,11 +66,32 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Text('''
-              123
-              456
-              789
-              '''),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              Text('1', style: TextStyle(color: Colors.white),),
+              Text('2', style: TextStyle(color: Colors.white),),
+              Text('3', style: TextStyle(color: Colors.white),),
+            ],
+          ),
+          Row(
+            children: [
+              Text('4', style: TextStyle(color: Colors.white),),
+              Text('5', style: TextStyle(color: Colors.white),),
+              Text('6', style: TextStyle(color: Colors.white),),
+            ],
+          ),
+          Row(
+            children: [
+              Text('7', style: TextStyle(color: Colors.white),),
+              Text('8', style: TextStyle(color: Colors.white),),
+              Text('9', style: TextStyle(color: Colors.white),),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
