@@ -5,8 +5,8 @@ class DefaultLayout extends StatelessWidget {
   final String title;
 
   const DefaultLayout({
-    required this.children,
     required this.title,
+    required this.children,
     super.key
   });
 

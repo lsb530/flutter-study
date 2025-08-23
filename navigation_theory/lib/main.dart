@@ -1,10 +1,25 @@
 import 'package:navigation_theory/screen/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:navigation_theory/screen/route_one_screen.dart';
+import 'package:navigation_theory/screen/route_three_screen.dart';
+import 'package:navigation_theory/screen/route_two_screen.dart';
 
+/// Imperative vs Declarative
 void main() {
   runApp(
     MaterialApp(
-      home: HomeScreen(),
+      // home: HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        /// key - 라우트 이름
+        /// value - builder -> 이동하고 싶은 라우트
+        '/': (BuildContext context) => HomeScreen(),
+        '/one': (BuildContext context) => RouteOneScreen(
+          number: 999,
+        ),
+        '/two': (BuildContext context) => RouteTwoScreen(),
+        '/three': (BuildContext context) => RouteThreeScreen(),
+      },
     ),
   );
 }
