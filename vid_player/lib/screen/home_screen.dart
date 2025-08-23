@@ -6,9 +6,34 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SizedBox(
+      body: Container(
         width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            // colors의 개수만큼
+            /*
+            stops: [
+              0, 0.9
+            ],
+            */
+            colors: [
+              Color(0xFF2A3A7C),
+              Color(0xFF000118),
+            ],
+          ),
+          /*
+          RadialGradient(
+            center: Alignment.center,
+            radius: 3,
+            colors: [
+              Colors.red,
+              Colors.green,
+            ],
+          ),
+          */
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
