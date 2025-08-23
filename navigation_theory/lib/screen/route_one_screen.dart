@@ -40,7 +40,7 @@ class RouteOneScreen extends StatelessWidget {
               ),
             );
           },
-          child: Text('Push'),
+          child: Text('Push Route Two'),
         ),
       ],
     );

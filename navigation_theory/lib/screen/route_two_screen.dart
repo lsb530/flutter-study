@@ -39,7 +39,31 @@ class RouteTwoScreen extends StatelessWidget {
               arguments: 77777,
             );
           },
-          child: Text('Push'),
+          child: Text('Push Route Three'),
+        ),
+        OutlinedButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return RouteThreeScreen();
+                },
+                settings: RouteSettings(
+                  arguments: 1234,
+                ),
+              ),
+            );
+          },
+          child: Text('Push Replacement'),
+        ),
+        OutlinedButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed(
+              '/three',
+              arguments: 9999,
+            );
+          },
+          child: Text('Push Replacement Named'),
         ),
       ],
     );

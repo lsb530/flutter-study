@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
 
             print(result);
           },
-          child: Text('Push'),
+          child: Text('Push Route One'),
         ),
       ],
     );
