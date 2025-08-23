@@ -7,48 +7,51 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultLayout(
-      title: 'HomeScreen',
-      children: [
-        OutlinedButton(
-          onPressed: () async {
-            final result = await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return RouteOneScreen(
-                    number: 20,
-                  );
-                },
-              ),
-            );
+    return PopScope(
+      canPop: false,
+      child: DefaultLayout(
+        title: 'HomeScreen',
+        children: [
+          OutlinedButton(
+            onPressed: () async {
+              final result = await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return RouteOneScreen(
+                      number: 20,
+                    );
+                  },
+                ),
+              );
 
-            print(result);
-          },
-          child: Text('Push Route One'),
-        ),
-        OutlinedButton(
-          onPressed: () {
-            Navigator.of(context).pop(
-              456,
-            );
-          },
-          child: Text('Pop'),
-        ),
-        OutlinedButton(
-          onPressed: () {
-            Navigator.of(context).maybePop(
-              456,
-            );
-          },
-          child: Text('Maybe Pop'),
-        ),
-        OutlinedButton(
-          onPressed: () {
-            print(Navigator.of(context).canPop());
-          },
-          child: Text('Can Pop'),
-        ),
-      ],
+              print(result);
+            },
+            child: Text('Push Route One'),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pop(
+                456,
+              );
+            },
+            child: Text('Pop'),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).maybePop(
+                456,
+              );
+            },
+            child: Text('Maybe Pop'),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              print(Navigator.of(context).canPop());
+            },
+            child: Text('Can Pop'),
+          ),
+        ],
+      ),
     );
   }
 }
