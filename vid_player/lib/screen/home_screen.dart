@@ -220,11 +220,35 @@ class _VideoPlayerState extends State<_VideoPlayer> {
               left: 0,
               right: 0,
               bottom: 0,
-              child: Slider(
-                value: videoPlayerController.value.position.inSeconds
-                    .toDouble(),
-                max: videoPlayerController.value.duration.inSeconds.toDouble(),
-                onChanged: (double val) {},
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      '${videoPlayerController.value.position.inMinutes.toString().padLeft(2, '0')}:${(videoPlayerController.value.position.inSeconds % 60).toString().padLeft(2, '0')}',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    Expanded(
+                      child: Slider(
+                        value: videoPlayerController.value.position.inSeconds
+                            .toDouble(),
+                        max: videoPlayerController.value.duration.inSeconds
+                            .toDouble(),
+                        onChanged: (double val) {},
+                      ),
+                    ),
+                    Text(
+                      '${videoPlayerController.value.duration.inMinutes.toString().padLeft(2, '0')}:${(videoPlayerController.value.duration.inSeconds % 60).toString().padLeft(2, '0')}',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Positioned(
