@@ -19,3 +19,5 @@ Camera, Image... 등
 ```shell
 flutter clean
 ```
+
+![app.gif](vid_player/img/app.gif)
