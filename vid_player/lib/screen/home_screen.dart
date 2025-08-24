@@ -142,6 +142,10 @@ class _VideoPlayerState extends State<_VideoPlayer> {
 
     await videoPlayerController.initialize();
 
+    videoPlayerController.addListener(() {
+      setState(() { });
+    });
+
     setState(() {});
   }
 
@@ -195,7 +199,8 @@ class _VideoPlayerState extends State<_VideoPlayer> {
               right: 0,
               bottom: 0,
               child: Slider(
-                value: 0,
+                value: videoPlayerController.value.position.inSeconds.toDouble(),
+                max: videoPlayerController.value.duration.inSeconds.toDouble(),
                 onChanged: (double val) {},
               ),
             ),
