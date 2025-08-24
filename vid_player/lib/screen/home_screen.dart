@@ -167,8 +167,20 @@ class _VideoPlayerState extends State<_VideoPlayer> {
                   ),
                   IconButton(
                     color: Colors.white,
-                    onPressed: () {},
-                    icon: Icon(Icons.play_arrow),
+                    onPressed: () {
+                      setState(() {
+                        if (videoPlayerController.value.isPlaying) {
+                          videoPlayerController.pause();
+                        } else {
+                          videoPlayerController.play();
+                        }
+                      });
+                    },
+                    icon: Icon(
+                      videoPlayerController.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                    ),
                   ),
                   IconButton(
                     color: Colors.white,
