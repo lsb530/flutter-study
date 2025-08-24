@@ -185,6 +185,7 @@ class _VideoPlayerState extends State<_VideoPlayer> {
             _Bottom(
               position: videoPlayerController.value.position,
               maxPosition: videoPlayerController.value.duration,
+              onSliderChanged: onSliderChanged,
             ),
             _PickAnotherVideo(
               onPressed: widget.onAnotherVideoPicked,
@@ -225,6 +226,12 @@ class _VideoPlayerState extends State<_VideoPlayer> {
         currentPosition.inSeconds) {
       position = currentPosition + Duration(seconds: 3);
     }
+
+    videoPlayerController.seekTo(position);
+  }
+
+  onSliderChanged(double value) {
+    final position = Duration(seconds: value.toInt());
 
     videoPlayerController.seekTo(position);
   }
@@ -277,10 +284,12 @@ class _PlayButton extends StatelessWidget {
 class _Bottom extends StatelessWidget {
   final Duration position;
   final Duration maxPosition;
+  final ValueChanged<double> onSliderChanged;
 
   const _Bottom({
     required this.position,
     required this.maxPosition,
+    required this.onSliderChanged,
     super.key,
   });
 
@@ -306,7 +315,7 @@ class _Bottom extends StatelessWidget {
               child: Slider(
                 value: position.inSeconds.toDouble(),
                 max: maxPosition.inSeconds.toDouble(),
-                onChanged: (double val) {},
+                onChanged: onSliderChanged,
               ),
             ),
             Text(
