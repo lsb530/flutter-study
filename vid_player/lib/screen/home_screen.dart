@@ -143,7 +143,7 @@ class _VideoPlayerState extends State<_VideoPlayer> {
     await videoPlayerController.initialize();
 
     videoPlayerController.addListener(() {
-      setState(() { });
+      setState(() {});
     });
 
     setState(() {});
@@ -166,7 +166,17 @@ class _VideoPlayerState extends State<_VideoPlayer> {
                 children: [
                   IconButton(
                     color: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      final currentPosition =
+                          videoPlayerController.value.position;
+                      Duration position = Duration();
+
+                      if (currentPosition.inSeconds > 3) {
+                        position = currentPosition - Duration(seconds: 3);
+                      }
+
+                      videoPlayerController.seekTo(position);
+                    },
                     icon: Icon(Icons.rotate_left),
                   ),
                   IconButton(
@@ -188,7 +198,19 @@ class _VideoPlayerState extends State<_VideoPlayer> {
                   ),
                   IconButton(
                     color: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      final maxPosition = videoPlayerController.value.duration;
+                      final currentPosition =
+                          videoPlayerController.value.position;
+                      Duration position = maxPosition;
+
+                      if ((maxPosition - Duration(seconds: 3)).inSeconds >
+                          currentPosition.inSeconds) {
+                        position = currentPosition + Duration(seconds: 3);
+                      }
+
+                      videoPlayerController.seekTo(position);
+                    },
                     icon: Icon(Icons.rotate_right),
                   ),
                 ],
@@ -199,7 +221,8 @@ class _VideoPlayerState extends State<_VideoPlayer> {
               right: 0,
               bottom: 0,
               child: Slider(
-                value: videoPlayerController.value.position.inSeconds.toDouble(),
+                value: videoPlayerController.value.position.inSeconds
+                    .toDouble(),
                 max: videoPlayerController.value.duration.inSeconds.toDouble(),
                 onChanged: (double val) {},
               ),
