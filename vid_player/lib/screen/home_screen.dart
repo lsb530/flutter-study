@@ -133,6 +133,7 @@ class _VideoPlayer extends StatefulWidget {
 
 class _VideoPlayerState extends State<_VideoPlayer> {
   late VideoPlayerController videoPlayerController;
+  bool showIcons = true;
 
   @override
   void initState() {
@@ -140,7 +141,6 @@ class _VideoPlayerState extends State<_VideoPlayer> {
 
     initController();
   }
-
 
   @override
   void didUpdateWidget(covariant _VideoPlayer oldWidget) {
@@ -168,29 +168,44 @@ class _VideoPlayerState extends State<_VideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AspectRatio(
-        aspectRatio: videoPlayerController.value.aspectRatio,
-        child: Stack(
-          children: [
-            VideoPlayer(
-              videoPlayerController,
-            ),
-            _PlayButton(
-              onReversePressed: onReversePressed,
-              onPlayPressed: onPlayPressed,
-              onForwardPressed: onForwardPressed,
-              isPlaying: videoPlayerController.value.isPlaying,
-            ),
-            _Bottom(
-              position: videoPlayerController.value.position,
-              maxPosition: videoPlayerController.value.duration,
-              onSliderChanged: onSliderChanged,
-            ),
-            _PickAnotherVideo(
-              onPressed: widget.onAnotherVideoPicked,
-            ),
-          ],
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          showIcons = !showIcons;
+        });
+      },
+      child: Center(
+        child: AspectRatio(
+          aspectRatio: videoPlayerController.value.aspectRatio,
+          child: Stack(
+            children: [
+              VideoPlayer(
+                videoPlayerController,
+              ),
+              if (showIcons)
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Colors.black.withOpacity(0.5),
+                ),
+              if (showIcons)
+                _PlayButton(
+                  onReversePressed: onReversePressed,
+                  onPlayPressed: onPlayPressed,
+                  onForwardPressed: onForwardPressed,
+                  isPlaying: videoPlayerController.value.isPlaying,
+                ),
+              _Bottom(
+                position: videoPlayerController.value.position,
+                maxPosition: videoPlayerController.value.duration,
+                onSliderChanged: onSliderChanged,
+              ),
+              if (showIcons)
+                _PickAnotherVideo(
+                  onPressed: widget.onAnotherVideoPicked,
+                ),
+            ],
+          ),
         ),
       ),
     );
