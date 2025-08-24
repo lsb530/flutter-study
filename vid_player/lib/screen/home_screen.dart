@@ -13,27 +13,71 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   XFile? video;
+  VideoPlayerController? videoPlayerController;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: video != null
+      body: video != null && videoPlayerController != null
           ? _VideoPlayer(
               video: video!,
-              onAnotherVideoPicked: onLogoTap,
+              videoPlayerController: videoPlayerController!,
+              onAnotherVideoPicked: onAnotherVideoPicked,
+              onInitController: initController,
             )
+          : isLoading
+          ? Center(child: CircularProgressIndicator())
           : _VideoSelector(onLogoTap: onLogoTap),
     );
   }
 
+  @override
+  void dispose() {
+    videoPlayerController?.dispose();
+    super.dispose();
+  }
+
+  onAnotherVideoPicked() async {
+    if (videoPlayerController != null &&
+        videoPlayerController!.value.isPlaying) {
+      await videoPlayerController!.pause();
+    }
+
+    videoPlayerController?.dispose();
+    videoPlayerController = null;
+
+    onLogoTap();
+  }
+
   onLogoTap() async {
-    final video = await ImagePicker().pickVideo(
+    final pickedVideo = await ImagePicker().pickVideo(
       source: ImageSource.gallery,
     );
 
+    initController(pickedVideo);
+  }
+
+  initController(XFile? pickedVideo) async {
+    if (pickedVideo != null) {
+      setState(() {
+        isLoading = true;
+      });
+
+      videoPlayerController = VideoPlayerController.file(
+        File(pickedVideo.path),
+      );
+      await videoPlayerController!.initialize();
+
+      videoPlayerController!.addListener(() {
+        setState(() {});
+      });
+    }
+
     setState(() {
-      this.video = video;
+      this.video = pickedVideo;
+      isLoading = false;
     });
   }
 }
@@ -119,11 +163,15 @@ class _Title extends StatelessWidget {
 
 class _VideoPlayer extends StatefulWidget {
   final XFile video;
+  final VideoPlayerController videoPlayerController;
   final VoidCallback onAnotherVideoPicked;
+  final Function(XFile?) onInitController;
 
   const _VideoPlayer({
     required this.video,
+    required this.videoPlayerController,
     required this.onAnotherVideoPicked,
+    required this.onInitController,
     super.key,
   });
 
@@ -132,14 +180,11 @@ class _VideoPlayer extends StatefulWidget {
 }
 
 class _VideoPlayerState extends State<_VideoPlayer> {
-  late VideoPlayerController videoPlayerController;
   bool showIcons = true;
 
   @override
   void initState() {
     super.initState();
-
-    initController();
   }
 
   @override
@@ -147,23 +192,10 @@ class _VideoPlayerState extends State<_VideoPlayer> {
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.video.path != widget.video.path) {
-      // videoPlayerController.dispose();
-      initController();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.onInitController(widget.video);
+      });
     }
-  }
-
-  initController() async {
-    videoPlayerController = VideoPlayerController.file(
-      File(widget.video.path),
-    );
-
-    await videoPlayerController.initialize();
-
-    videoPlayerController.addListener(() {
-      setState(() {});
-    });
-
-    setState(() {});
   }
 
   @override
@@ -176,11 +208,11 @@ class _VideoPlayerState extends State<_VideoPlayer> {
       },
       child: Center(
         child: AspectRatio(
-          aspectRatio: videoPlayerController.value.aspectRatio,
+          aspectRatio: widget.videoPlayerController.value.aspectRatio,
           child: Stack(
             children: [
               VideoPlayer(
-                videoPlayerController,
+                widget.videoPlayerController,
               ),
               if (showIcons)
                 Container(
@@ -193,11 +225,11 @@ class _VideoPlayerState extends State<_VideoPlayer> {
                   onReversePressed: onReversePressed,
                   onPlayPressed: onPlayPressed,
                   onForwardPressed: onForwardPressed,
-                  isPlaying: videoPlayerController.value.isPlaying,
+                  isPlaying: widget.videoPlayerController.value.isPlaying,
                 ),
               _Bottom(
-                position: videoPlayerController.value.position,
-                maxPosition: videoPlayerController.value.duration,
+                position: widget.videoPlayerController.value.position,
+                maxPosition: widget.videoPlayerController.value.duration,
                 onSliderChanged: onSliderChanged,
               ),
               if (showIcons)
@@ -212,29 +244,29 @@ class _VideoPlayerState extends State<_VideoPlayer> {
   }
 
   onReversePressed() {
-    final currentPosition = videoPlayerController.value.position;
+    final currentPosition = widget.videoPlayerController.value.position;
     Duration position = Duration();
 
     if (currentPosition.inSeconds > 3) {
       position = currentPosition - Duration(seconds: 3);
     }
 
-    videoPlayerController.seekTo(position);
+    widget.videoPlayerController.seekTo(position);
   }
 
   onPlayPressed() {
     setState(() {
-      if (videoPlayerController.value.isPlaying) {
-        videoPlayerController.pause();
+      if (widget.videoPlayerController.value.isPlaying) {
+        widget.videoPlayerController.pause();
       } else {
-        videoPlayerController.play();
+        widget.videoPlayerController.play();
       }
     });
   }
 
   onForwardPressed() {
-    final maxPosition = videoPlayerController.value.duration;
-    final currentPosition = videoPlayerController.value.position;
+    final maxPosition = widget.videoPlayerController.value.duration;
+    final currentPosition = widget.videoPlayerController.value.position;
     Duration position = maxPosition;
 
     if ((maxPosition - Duration(seconds: 3)).inSeconds >
@@ -242,13 +274,13 @@ class _VideoPlayerState extends State<_VideoPlayer> {
       position = currentPosition + Duration(seconds: 3);
     }
 
-    videoPlayerController.seekTo(position);
+    widget.videoPlayerController.seekTo(position);
   }
 
   onSliderChanged(double value) {
     final position = Duration(seconds: value.toInt());
 
-    videoPlayerController.seekTo(position);
+    widget.videoPlayerController.seekTo(position);
   }
 }
 
