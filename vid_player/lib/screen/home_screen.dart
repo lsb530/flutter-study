@@ -19,7 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: video != null
-          ? _VideoPlayer(video: video!)
+          ? _VideoPlayer(
+              video: video!,
+              onAnotherVideoPicked: onLogoTap,
+            )
           : _VideoSelector(onLogoTap: onLogoTap),
     );
   }
@@ -116,9 +119,11 @@ class _Title extends StatelessWidget {
 
 class _VideoPlayer extends StatefulWidget {
   final XFile video;
+  final VoidCallback onAnotherVideoPicked;
 
   const _VideoPlayer({
     required this.video,
+    required this.onAnotherVideoPicked,
     super.key,
   });
 
@@ -127,12 +132,24 @@ class _VideoPlayer extends StatefulWidget {
 }
 
 class _VideoPlayerState extends State<_VideoPlayer> {
-  late final VideoPlayerController videoPlayerController;
+  late VideoPlayerController videoPlayerController;
 
   @override
   void initState() {
     super.initState();
+
     initController();
+  }
+
+
+  @override
+  void didUpdateWidget(covariant _VideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.video.path != widget.video.path) {
+      // videoPlayerController.dispose();
+      initController();
+    }
   }
 
   initController() async {
@@ -170,7 +187,7 @@ class _VideoPlayerState extends State<_VideoPlayer> {
               maxPosition: videoPlayerController.value.duration,
             ),
             _PickAnotherVideo(
-              onPressed: () {},
+              onPressed: widget.onAnotherVideoPicked,
             ),
           ],
         ),
