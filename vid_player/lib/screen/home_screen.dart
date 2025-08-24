@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: video != null
           ? _VideoPlayer(video: video!)
           : _VideoSelector(onLogoTap: onLogoTap),
@@ -110,7 +114,7 @@ class _Title extends StatelessWidget {
   }
 }
 
-class _VideoPlayer extends StatelessWidget {
+class _VideoPlayer extends StatefulWidget {
   final XFile video;
 
   const _VideoPlayer({
@@ -119,9 +123,37 @@ class _VideoPlayer extends StatelessWidget {
   });
 
   @override
+  State<_VideoPlayer> createState() => _VideoPlayerState();
+}
+
+class _VideoPlayerState extends State<_VideoPlayer> {
+  late final VideoPlayerController videoPlayerController;
+
+  @override
+  void initState() {
+    super.initState();
+    initController();
+  }
+
+  initController() async {
+    videoPlayerController = VideoPlayerController.file(
+      File(widget.video.path),
+    );
+
+    await videoPlayerController.initialize();
+
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Video Player'),
+      child: AspectRatio(
+        aspectRatio: videoPlayerController.value.aspectRatio,
+        child: VideoPlayer(
+          videoPlayerController,
+        ),
+      ),
     );
   }
 }
