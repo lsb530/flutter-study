@@ -150,8 +150,54 @@ class _VideoPlayerState extends State<_VideoPlayer> {
     return Center(
       child: AspectRatio(
         aspectRatio: videoPlayerController.value.aspectRatio,
-        child: VideoPlayer(
-          videoPlayerController,
+        child: Stack(
+          children: [
+            VideoPlayer(
+              videoPlayerController,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    color: Colors.white,
+                    onPressed: () {},
+                    icon: Icon(Icons.rotate_left),
+                  ),
+                  IconButton(
+                    color: Colors.white,
+                    onPressed: () {},
+                    icon: Icon(Icons.play_arrow),
+                  ),
+                  IconButton(
+                    color: Colors.white,
+                    onPressed: () {},
+                    icon: Icon(Icons.rotate_right),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Slider(
+                value: 0,
+                onChanged: (double val) {},
+              ),
+            ),
+            Positioned(
+              right: 0,
+              child: IconButton(
+                color: Colors.white,
+                onPressed: () {},
+                icon: Icon(
+                  Icons.photo_camera_back,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
