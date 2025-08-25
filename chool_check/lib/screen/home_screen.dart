@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       checkedPermission = await Geolocator.requestPermission();
     }
 
-    if (checkedPermission != LocationPermission.always ||
+    if (checkedPermission != LocationPermission.always &&
     checkedPermission != LocationPermission.whileInUse) {
       throw Exception('위치 권한을 허가 해주세요.');
     }
