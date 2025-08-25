@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:video_call/constant/keys.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 
 class CamScreen extends StatefulWidget {
   const CamScreen({super.key});
@@ -8,6 +11,43 @@ class CamScreen extends StatefulWidget {
 }
 
 class _CamScreenState extends State<CamScreen> {
+  RtcEngine? engine;
+  int uid = 0;
+
+  init() async {
+    final resp = await [Permission.camera, Permission.microphone].request();
+
+    final cameraPermission = resp[Permission.camera];
+    final microphonePermission = resp[Permission.microphone];
+
+    if (cameraPermission != PermissionStatus.granted ||
+        microphonePermission != PermissionStatus.granted) {
+      throw '카메라 또는 마이크 권한이 없습니다.';
+    }
+
+    if (engine != null) {
+      engine = createAgoraRtcEngine();
+
+      await engine!.initialize(
+        RtcEngineContext(
+          appId: appId,
+        ),
+      );
+
+      await engine!.enableVideo();
+      await engine!.startPreview();
+
+      ChannelMediaOptions options = ChannelMediaOptions();
+
+      await engine!.joinChannel(
+        token: token,
+        channelId: channelName,
+        uid: uid,
+        options: options,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
