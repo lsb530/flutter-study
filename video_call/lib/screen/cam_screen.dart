@@ -13,6 +13,7 @@ class CamScreen extends StatefulWidget {
 class _CamScreenState extends State<CamScreen> {
   RtcEngine? engine;
   int uid = 0;
+  int? remoteUid;
 
   Future<void> init() async {
     final resp = await [Permission.camera, Permission.microphone].request();
@@ -31,6 +32,22 @@ class _CamScreenState extends State<CamScreen> {
       await engine!.initialize(
         RtcEngineContext(
           appId: appId,
+        ),
+      );
+
+      engine!.registerEventHandler(
+        RtcEngineEventHandler(
+          onUserJoined:
+              (
+                RtcConnection connection,
+                int remoteUid,
+                int elapsed,
+              ) {
+                print('--- User Joined ----');
+                setState(() {
+                  this.remoteUid = remoteUid;
+                });
+              },
         ),
       );
 
@@ -72,7 +89,7 @@ class _CamScreenState extends State<CamScreen> {
           return Stack(
             children: [
               Container(
-                color: Colors.red,
+                child: renderMainView(),
               ),
               Container(
                 width: 120,
@@ -98,6 +115,26 @@ class _CamScreenState extends State<CamScreen> {
             ],
           );
         },
+      ),
+    );
+  }
+
+  renderMainView() {
+    if (remoteUid == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return AgoraVideoView(
+      controller: VideoViewController.remote(
+        rtcEngine: engine!,
+        canvas: VideoCanvas(
+          uid: remoteUid,
+        ),
+        connection: RtcConnection(
+          channelId: channelName,
+        ),
       ),
     );
   }
