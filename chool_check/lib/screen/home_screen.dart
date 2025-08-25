@@ -10,7 +10,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final CameraPosition initialPosition = CameraPosition(
     target: LatLng(
       37.5214,
@@ -19,17 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
     zoom: 15,
   );
 
-  @override
-  void initState() {
-    super.initState();
-    checkPermission();
-  }
-
   checkPermission() async {
     final isLocationEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (!isLocationEnabled) {
-      throw Exception('위치 기능을 활성화 해주세요.');
+      // throw Exception('위치 기능을 활성화 해주세요.');
+      throw '위치 기능을 활성화 해주세요.';
     }
 
     LocationPermission checkedPermission = await Geolocator.checkPermission();
@@ -39,22 +33,34 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     if (checkedPermission != LocationPermission.always &&
-    checkedPermission != LocationPermission.whileInUse) {
-      throw Exception('위치 권한을 허가 해주세요.');
+        checkedPermission != LocationPermission.whileInUse) {
+      // throw Exception('위치 권한을 허가 해주세요.');
+      throw '위치 권한을 허가 해주세요.';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: GoogleMap(
-              initialCameraPosition: initialPosition,
-            ),
-          ),
-        ],
+      body: FutureBuilder(
+        future: checkPermission(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
+
+          return Column(
+            children: [
+              Expanded(
+                child: GoogleMap(
+                  initialCameraPosition: initialPosition,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
