@@ -47,3 +47,4 @@ app.*.map.json
 # API Key
 /android/app/src/main/AndroidManifest.xml
 /ios/Runner/AppDelegate.swift
+key_file.txt
