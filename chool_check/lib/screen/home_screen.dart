@@ -108,64 +108,24 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(snapshot.error.toString()),
             );
           }
-
           return Column(
             children: [
               Expanded(
                 flex: 2,
-                child: GoogleMap(
-                  initialCameraPosition: initialPosition,
-                  mapType: MapType.normal,
-                  myLocationEnabled: true,
-                  myLocationButtonEnabled: false,
-                  zoomControlsEnabled: false,
+                child: _GoogleMaps(
+                  initialCameraLocation: initialPosition,
                   onMapCreated: (GoogleMapController controller) {
                     this.controller = controller;
                   },
-                  markers: {
-                    Marker(
-                      markerId: MarkerId('123'),
-                      position: LatLng(
-                        37.5214,
-                        126.9246,
-                      ),
-                    ),
-                  },
-                  circles: {
-                    Circle(
-                      circleId: CircleId('inDistance'),
-                      center: LatLng(
-                        37.5214,
-                        126.9246,
-                      ),
-                      radius: okDistance,
-                      fillColor: canChoolCheck
-                          ? Colors.blue.withValues(alpha: 0.5)
-                          : Colors.red.withValues(alpha: 0.5),
-                      strokeColor: canChoolCheck ? Colors.blue : Colors.red,
-                      strokeWidth: 1,
-                    ),
-                  },
+                  radius: okDistance,
+                  canChoolCheck: canChoolCheck,
                 ),
               ),
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      choolCheckDone ? Icons.check : Icons.timelapse_outlined,
-                      color: choolCheckDone ? Colors.green : Colors.blue,
-                    ),
-                    SizedBox(height: 16.0),
-                    if (!choolCheckDone && canChoolCheck)
-                      OutlinedButton(
-                        onPressed: choolCheckPressed,
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.blue,
-                        ),
-                        child: Text('출근하기'),
-                      ),
-                  ],
+                child: _BottomChoolCheckButton(
+                  choolCheckDone: choolCheckDone,
+                  canChoolCheck: canChoolCheck,
+                  choolCheckPressed: choolCheckPressed,
                 ),
               ),
             ],
@@ -224,6 +184,92 @@ class _HomeScreenState extends State<HomeScreen> {
           location.longitude,
         ),
       ),
+    );
+  }
+}
+
+class _GoogleMaps extends StatelessWidget {
+  final CameraPosition initialCameraLocation;
+  final MapCreatedCallback onMapCreated;
+  final bool canChoolCheck;
+  final double radius;
+
+  const _GoogleMaps({
+    required this.initialCameraLocation,
+    required this.onMapCreated,
+    required this.canChoolCheck,
+    required this.radius,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GoogleMap(
+      initialCameraPosition: initialCameraLocation,
+      mapType: MapType.normal,
+      myLocationEnabled: true,
+      myLocationButtonEnabled: false,
+      zoomControlsEnabled: false,
+      onMapCreated: onMapCreated,
+      markers: {
+        Marker(
+          markerId: MarkerId('123'),
+          position: LatLng(
+            37.5214,
+            126.9246,
+          ),
+        ),
+      },
+      circles: {
+        Circle(
+          circleId: CircleId('inDistance'),
+          center: LatLng(
+            37.5214,
+            126.9246,
+          ),
+          radius: radius,
+          fillColor: canChoolCheck
+              ? Colors.blue.withValues(alpha: 0.5)
+              : Colors.red.withValues(alpha: 0.5),
+          strokeColor: canChoolCheck ? Colors.blue : Colors.red,
+          strokeWidth: 1,
+        ),
+      },
+    );
+  }
+}
+
+class _BottomChoolCheckButton extends StatelessWidget {
+  final bool choolCheckDone;
+  final bool canChoolCheck;
+  final VoidCallback choolCheckPressed;
+
+  const _BottomChoolCheckButton({
+    required this.choolCheckDone,
+    required this.canChoolCheck,
+    required this.choolCheckPressed,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          choolCheckDone ? Icons.check : Icons.timelapse_outlined,
+          color: choolCheckDone ? Colors.green : Colors.blue,
+        ),
+        SizedBox(height: 16.0),
+        if (!choolCheckDone && canChoolCheck)
+          OutlinedButton(
+            onPressed: choolCheckPressed,
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Colors.blue,
+            ),
+            child: Text('출근하기'),
+          ),
+      ],
     );
   }
 }
