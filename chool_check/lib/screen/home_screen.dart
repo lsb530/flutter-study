@@ -56,6 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: GoogleMap(
                   initialCameraPosition: initialPosition,
+                  mapType: MapType.normal,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: false,
+                  zoomControlsEnabled: false,
                 ),
               ),
             ],
