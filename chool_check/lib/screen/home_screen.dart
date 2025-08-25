@@ -75,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return Column(
             children: [
               Expanded(
+                flex: 2,
                 child: GoogleMap(
                   initialCameraPosition: initialPosition,
                   mapType: MapType.normal,
@@ -108,6 +109,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       strokeWidth: 1,
                     ),
                   },
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.timelapse_outlined,
+                      color: Colors.blue,
+                    ),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    OutlinedButton(
+                      onPressed: () {},
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.blue,
+                      ),
+                      child: Text('출근하기'),
+                    ),
+                  ],
                 ),
               ),
             ],
