@@ -25,7 +25,7 @@ class _CamScreenState extends State<CamScreen> {
       throw '카메라 또는 마이크 권한이 없습니다.';
     }
 
-    if (engine != null) {
+    if (engine == null) {
       engine = createAgoraRtcEngine();
 
       await engine!.initialize(
@@ -77,7 +77,14 @@ class _CamScreenState extends State<CamScreen> {
               Container(
                 width: 120,
                 height: 160,
-                color: Colors.blue,
+                child: AgoraVideoView(
+                  controller: VideoViewController(
+                    rtcEngine: engine!,
+                    canvas: VideoCanvas(
+                      uid: uid,
+                    ),
+                  ),
+                ),
               ),
               Positioned(
                 bottom: 16.0,
