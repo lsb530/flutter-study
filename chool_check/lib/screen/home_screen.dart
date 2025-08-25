@@ -11,9 +11,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final CameraPosition initialPosition = CameraPosition(
     target: LatLng(
-      37.5233273,
-      126.921252,
+      37.5214,
+      126.9246,
     ),
+    zoom: 15,
   );
 
   @override
