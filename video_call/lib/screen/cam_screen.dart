@@ -24,6 +24,15 @@ class _CamScreenState extends State<CamScreen> {
             height: 160,
             color: Colors.blue,
           ),
+          Positioned(
+            bottom: 16.0,
+            left: 16.0,
+            right: 16.0,
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Text('나가기'),
+            ),
+          ),
         ],
       ),
     );
