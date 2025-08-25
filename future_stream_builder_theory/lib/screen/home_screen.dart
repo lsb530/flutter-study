@@ -12,47 +12,57 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<int>(
-        // future: null,
-        future: getNumber(),
-        builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-          print('------- data -------');
-          print(snapshot.connectionState);
-          print(snapshot.data);
+      // body: _FutureBuilder(),
+      body: _StreamBuilder(),
+    );
+  }
+}
 
-          /// ConnectionState.none;    -> Future 또는 Stream이 입력되지 않은 상태
-          /// ConnectionState.active;  -> Stream에서만 존재 / 스트림 아직 실행중
-          /// ConnectionState.done;    -> Future 또는 Stream이 종료되었을 때
-          /// ConnectionState.waiting; -> 실행 중
+class _FutureBuilder extends StatelessWidget {
+  const _FutureBuilder({super.key});
 
-          if (snapshot.connectionState == ConnectionState.active) {
-            /// 다른 위젯을 보여준다
-          }
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<int>(
+      // future: null,
+      future: getNumber(),
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+        print('------- data -------');
+        print(snapshot.connectionState);
+        print(snapshot.data);
 
-          /// error가 존재하는지 확인
-          if (snapshot.hasError) {
-            final error = snapshot.error;
+        /// ConnectionState.none;    -> Future 또는 Stream이 입력되지 않은 상태
+        /// ConnectionState.active;  -> Stream에서만 존재 / 스트림 아직 실행중
+        /// ConnectionState.done;    -> Future 또는 Stream이 종료되었을 때
+        /// ConnectionState.waiting; -> 실행 중
 
-            return Center(
-              child: Text('에러 발생: $error'),
-            );
-          }
+        if (snapshot.connectionState == ConnectionState.active) {
+          /// 다른 위젯을 보여준다
+        }
 
-          /// 데이터가 존재하는지 확인
-          if (snapshot.hasData) {
-            final data = snapshot.data;
-            return Center(
-              child: Text(
-                data.toString(),
-              ),
-            );
-          }
+        /// error가 존재하는지 확인
+        if (snapshot.hasError) {
+          final error = snapshot.error;
 
           return Center(
-            child: Text('데이터가 없습니다.'),
+            child: Text('에러 발생: $error'),
           );
-        },
-      ),
+        }
+
+        /// 데이터가 존재하는지 확인
+        if (snapshot.hasData) {
+          final data = snapshot.data;
+          return Center(
+            child: Text(
+              data.toString(),
+            ),
+          );
+        }
+
+        return Center(
+          child: Text('데이터가 없습니다.'),
+        );
+      },
     );
   }
 
@@ -63,6 +73,84 @@ class _HomeScreenState extends State<HomeScreen> {
 
     throw 'Error!!!';
 
-    return random.nextInt(100);
+    // return random.nextInt(100);
+  }
+}
+
+class _StreamBuilder extends StatelessWidget {
+  const _StreamBuilder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<int>(
+      // future: null,
+      stream: streamNumbers(),
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+        print('------- data -------');
+        print(snapshot.connectionState);
+        print(snapshot.data);
+
+        /// ConnectionState.none;    -> Future 또는 Stream이 입력되지 않은 상태
+        /// ConnectionState.active;  -> Stream에서만 존재 / 스트림 아직 실행중
+        /// ConnectionState.done;    -> Future 또는 Stream이 종료되었을 때
+        /// ConnectionState.waiting; -> 실행 중
+
+        if (snapshot.connectionState == ConnectionState.active) {
+          /// 다른 위젯을 보여준다
+          return SizedBox(
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 20.0,
+                  ),
+                  child: Text(
+                    snapshot.data.toString(),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        /// error가 존재하는지 확인
+        if (snapshot.hasError) {
+          final error = snapshot.error;
+
+          return Center(
+            child: Text('에러 발생: $error'),
+          );
+        }
+
+        /// 데이터가 존재하는지 확인
+        if (snapshot.hasData) {
+          final data = snapshot.data;
+          return Center(
+            child: Text(
+              data.toString(),
+            ),
+          );
+        }
+
+        return Center(
+          child: Text('데이터가 없습니다.'),
+        );
+      },
+    );
+  }
+
+  Stream<int> streamNumbers() async* {
+    for (int i = 0; i < 10; i++) {
+      await Future.delayed(Duration(seconds: 1));
+
+      // if (i == 5) {
+      //   throw '던져!';
+      // }
+
+      yield i;
+    }
   }
 }
