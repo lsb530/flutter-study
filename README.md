@@ -135,3 +135,6 @@ pod install --repo-update
 
 - android  
 ![geo_permission_android.png](chool_check/img/geo_permission_android.png)
+
+- denied permission  
+![no_permissions.png](chool_check/img/no_permissions.png)
