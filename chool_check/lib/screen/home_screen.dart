@@ -20,8 +20,42 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 
   bool choolCheckDone = false;
+  bool canChoolCheck = false;
+
+  final double okDistance = 100;
 
   late final GoogleMapController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Geolocator.getPositionStream().listen((event) {
+      final start = LatLng(
+        37.5214,
+        126.9246,
+      );
+      final end = LatLng(
+        event.latitude,
+        event.longitude,
+      );
+
+      final distance = Geolocator.distanceBetween(
+        start.latitude,
+        start.longitude,
+        end.latitude,
+        end.longitude,
+      );
+
+      setState(() {
+        if (distance > okDistance) {
+          canChoolCheck = false;
+        } else {
+          canChoolCheck = true;
+        }
+      });
+    });
+  }
 
   checkPermission() async {
     final isLocationEnabled = await Geolocator.isLocationServiceEnabled();
@@ -104,11 +138,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         37.5214,
                         126.9246,
                       ),
-                      radius: 100,
-                      fillColor: Colors.blue.withValues(
-                        alpha: 0.5,
-                      ),
-                      strokeColor: Colors.blue,
+                      radius: okDistance,
+                      fillColor: canChoolCheck
+                          ? Colors.blue.withValues(alpha: 0.5)
+                          : Colors.red.withValues(alpha: 0.5),
+                      strokeColor: canChoolCheck ? Colors.blue : Colors.red,
                       strokeWidth: 1,
                     ),
                   },
@@ -120,12 +154,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Icon(
                       choolCheckDone ? Icons.check : Icons.timelapse_outlined,
-                      color: choolCheckDone? Colors.green : Colors.blue,
+                      color: choolCheckDone ? Colors.green : Colors.blue,
                     ),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    if (!choolCheckDone)
+                    SizedBox(height: 16.0),
+                    if (!choolCheckDone && canChoolCheck)
                       OutlinedButton(
                         onPressed: choolCheckPressed,
                         style: OutlinedButton.styleFrom(
