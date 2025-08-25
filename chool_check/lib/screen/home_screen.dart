@@ -93,6 +93,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   },
+                  circles: {
+                    Circle(
+                      circleId: CircleId('inDistance'),
+                      center: LatLng(
+                        37.5214,
+                        126.9246,
+                      ),
+                      radius: 100,
+                      fillColor: Colors.blue.withValues(
+                        alpha: 0.5,
+                      ),
+                      strokeColor: Colors.blue,
+                      strokeWidth: 1,
+                    ),
+                  },
                 ),
               ),
             ],
