@@ -15,10 +15,14 @@
 - 특정 파일 Changes 추적 X
 ```shell
 git update-index --skip-worktree android/app/src/main/AndroidManifest.xml ios/Runner/AppDelegate.swift
+# 또는
+git update-index --assume-unchanged android/app/src/main/AndroidManifest.xml ios/Runner/AppDelegate.swift
 ```
 - 이후에 추적하고 싶다면
 ```shell
 git update-index --no-skip-worktree android/app/src/main/AndroidManifest.xml ios/Runner/AppDelegate.swift
+# 또는
+git update-index --no-assume-unchanged android/app/src/main/AndroidManifest.xml ios/Runner/AppDelegate.swift
 ```
 
 ### Google Maps API Key
