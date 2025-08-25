@@ -14,7 +14,7 @@ class _CamScreenState extends State<CamScreen> {
   RtcEngine? engine;
   int uid = 0;
 
-  init() async {
+  Future<void> init() async {
     final resp = await [Permission.camera, Permission.microphone].request();
 
     final cameraPermission = resp[Permission.camera];
@@ -54,26 +54,43 @@ class _CamScreenState extends State<CamScreen> {
       appBar: AppBar(
         title: Text('LIVE'),
       ),
-      body: Stack(
-        children: [
-          Container(
-            color: Colors.red,
-          ),
-          Container(
-            width: 120,
-            height: 160,
-            color: Colors.blue,
-          ),
-          Positioned(
-            bottom: 16.0,
-            left: 16.0,
-            right: 16.0,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text('나가기'),
-            ),
-          ),
-        ],
+      body: FutureBuilder(
+        future: init(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
+
+          return Stack(
+            children: [
+              Container(
+                color: Colors.red,
+              ),
+              Container(
+                width: 120,
+                height: 160,
+                color: Colors.blue,
+              ),
+              Positioned(
+                bottom: 16.0,
+                left: 16.0,
+                right: 16.0,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text('나가기'),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
