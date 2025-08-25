@@ -9,6 +9,8 @@
 - FutureBuilder
 - Permission
 
+![ios.gif](chool_check/img/ios.gif)
+
 ### Tips
 - 특정 파일 Changes 추적 X
 ```shell
