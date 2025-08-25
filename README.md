@@ -117,6 +117,14 @@ pod install --repo-update
 </plist>
 ```
 
+### Custom Location
+- ios(simulator)  
+![custom_location_ios1.png](chool_check/img/custom_location_ios1.png)
+![custom_location_ios2.png](chool_check/img/custom_location_ios2.png)
+
+- android(emulator)  
+![custom_location_android.png](chool_check/img/custom_location_android.png)
+
 ### Google Maps
 - korea  
 ![google_maps_korea.png](chool_check/img/google_maps_korea.png)
