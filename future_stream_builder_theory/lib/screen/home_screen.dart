@@ -146,9 +146,9 @@ class _StreamBuilder extends StatelessWidget {
     for (int i = 0; i < 10; i++) {
       await Future.delayed(Duration(seconds: 1));
 
-      // if (i == 5) {
-      //   throw '던져!';
-      // }
+      if (i == 5) {
+        throw '던져!';
+      }
 
       yield i;
     }
