@@ -31,7 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
           /// error가 존재하는지 확인
           if (snapshot.hasError) {
-            // final error = snapshot.error;
+            final error = snapshot.error;
+
+            return Center(
+              child: Text('에러 발생: $error'),
+            );
           }
 
           /// 데이터가 존재하는지 확인
@@ -56,6 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
     await Future.delayed(Duration(seconds: 3));
 
     final random = Random();
+
+    throw 'Error!!!';
 
     return random.nextInt(100);
   }
