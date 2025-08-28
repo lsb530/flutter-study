@@ -1,3 +1,4 @@
+import 'package:calendar_scheduler/const/color.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -16,17 +17,58 @@ class _HomeScreenState extends State<HomeScreen> {
     final now = DateTime.now();
     final firstDayOfCurrentMonth = DateTime(now.year, now.month, 1);
 
+    final defaultBoxDecoration = BoxDecoration(
+        borderRadius: BorderRadius.circular(6.0),
+        border: Border.all(
+          color: Colors.grey[200]!,
+          width: 1.0,
+        )
+    );
+
+    final defaultTextStyle = TextStyle(
+      color: Colors.grey[600],
+      fontWeight: FontWeight.w700,
+    );
+
     return Scaffold(
       body: SafeArea(
         child: TableCalendar(
           focusedDay: firstDayOfCurrentMonth.copyWith(
             day: now.day,
           ),
-          firstDay: DateTime(
-            1800,
+          firstDay: DateTime(1800),
+          lastDay: DateTime(3000),
+          headerStyle: HeaderStyle(
+            formatButtonVisible: false,
+            titleCentered: true,
+            titleTextStyle: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w700,
+            )
           ),
-          lastDay: DateTime(
-            3000,
+          calendarStyle: CalendarStyle(
+            isTodayHighlighted: true,
+            defaultDecoration: defaultBoxDecoration,
+            weekendDecoration: defaultBoxDecoration,
+            selectedDecoration: defaultBoxDecoration.copyWith(
+              border: Border.all(
+                color: primaryColor,
+                width: 1.0,
+              )
+            ),
+            todayDecoration: defaultBoxDecoration.copyWith(
+              color: primaryColor,
+            ),
+            outsideDecoration: defaultBoxDecoration.copyWith(
+              border: Border.all(
+                color: Colors.transparent,
+              ),
+            ),
+            defaultTextStyle: defaultTextStyle,
+            weekendTextStyle: defaultTextStyle,
+            selectedTextStyle: defaultTextStyle.copyWith(
+              color: primaryColor,
+            )
           ),
           onDaySelected: (selectedDay, focusedDay) {
             setState(() {
