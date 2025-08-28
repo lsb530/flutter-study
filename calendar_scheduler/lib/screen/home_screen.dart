@@ -1,6 +1,5 @@
-import 'package:calendar_scheduler/const/color.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:calendar_scheduler/component/calendar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,74 +16,34 @@ class _HomeScreenState extends State<HomeScreen> {
     final now = DateTime.now();
     final firstDayOfCurrentMonth = DateTime(now.year, now.month, 1);
 
-    final defaultBoxDecoration = BoxDecoration(
-        borderRadius: BorderRadius.circular(6.0),
-        border: Border.all(
-          color: Colors.grey[200]!,
-          width: 1.0,
-        )
-    );
-
-    final defaultTextStyle = TextStyle(
-      color: Colors.grey[600],
-      fontWeight: FontWeight.w700,
-    );
-
     return Scaffold(
       body: SafeArea(
-        child: TableCalendar(
-          locale: 'ko_KR',
-          focusedDay: firstDayOfCurrentMonth.copyWith(
-            day: now.day,
-          ),
-          firstDay: DateTime(1800),
-          lastDay: DateTime(3000),
-          headerStyle: HeaderStyle(
-            formatButtonVisible: false,
-            titleCentered: true,
-            titleTextStyle: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w700,
-            )
-          ),
-          calendarStyle: CalendarStyle(
-            isTodayHighlighted: true,
-            defaultDecoration: defaultBoxDecoration,
-            weekendDecoration: defaultBoxDecoration,
-            selectedDecoration: defaultBoxDecoration.copyWith(
-              border: Border.all(
-                color: primaryColor,
-                width: 1.0,
-              )
-            ),
-            todayDecoration: defaultBoxDecoration.copyWith(
-              color: primaryColor,
-            ),
-            outsideDecoration: defaultBoxDecoration.copyWith(
-              border: Border.all(
-                color: Colors.transparent,
+        child: Column(
+          children: [
+            Calendar(
+              focusedDay: firstDayOfCurrentMonth.copyWith(
+                day: now.day,
               ),
+              onDaySelected: onDaySelected,
+              selectedDayPredicate: selectedDayPredicate,
             ),
-            defaultTextStyle: defaultTextStyle,
-            weekendTextStyle: defaultTextStyle,
-            selectedTextStyle: defaultTextStyle.copyWith(
-              color: primaryColor,
-            )
-          ),
-          onDaySelected: (selectedDay, focusedDay) {
-            setState(() {
-              this.selectedDay = selectedDay;
-            });
-          },
-          selectedDayPredicate: (day) {
-            if (selectedDay == null) {
-              return false;
-            }
-
-            return day.isAtSameMomentAs(selectedDay!);
-          },
+          ],
         ),
       ),
     );
+  }
+
+  void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    setState(() {
+      this.selectedDay = selectedDay;
+    });
+  }
+
+  bool selectedDayPredicate(DateTime day) {
+    if (selectedDay == null) {
+      return false;
+    }
+
+    return day.isAtSameMomentAs(selectedDay!);
   }
 }
