@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:calendar_scheduler/const/color.dart';
 import 'package:calendar_scheduler/component/custom_text_field.dart';
 
-class ScheduleBottomSheet extends StatelessWidget {
+class ScheduleBottomSheet extends StatefulWidget {
   const ScheduleBottomSheet({super.key});
+
+  @override
+  State<ScheduleBottomSheet> createState() => _ScheduleBottomSheetState();
+}
+
+class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
+  String selectedColor = categoryColors.first;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +30,14 @@ class ScheduleBottomSheet extends StatelessWidget {
               SizedBox(height: 8.0),
               _Content(),
               SizedBox(height: 8.0),
-              _Categories(),
+              _Categories(
+                selectedColor: selectedColor,
+                onTap: (String color) {
+                  setState(() {
+                    selectedColor = color;
+                  });
+                },
+              ),
               SizedBox(height: 8.0),
               _SaveButton(),
             ],
@@ -71,8 +85,17 @@ class _Content extends StatelessWidget {
   }
 }
 
+typedef OnColorSelected = void Function(String color);
+
 class _Categories extends StatelessWidget {
-  const _Categories({super.key});
+  final String selectedColor;
+  final OnColorSelected onTap;
+
+  const _Categories({
+    required this.selectedColor,
+    required this.onTap,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -81,18 +104,29 @@ class _Categories extends StatelessWidget {
           .map(
             (e) => Padding(
               padding: EdgeInsets.only(right: 8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color(
-                    int.parse(
-                      'FF$e',
-                      radix: 16,
+              child: GestureDetector(
+                onTap: () {
+                  onTap(e);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(
+                      int.parse(
+                        'FF$e',
+                        radix: 16,
+                      ),
                     ),
+                    border: e == selectedColor
+                        ? Border.all(
+                            color: Colors.black,
+                            width: 4.0,
+                          )
+                        : null,
+                    shape: BoxShape.circle,
                   ),
-                  shape: BoxShape.circle,
+                  width: 32.0,
+                  height: 32.0,
                 ),
-                width: 32.0,
-                height: 32.0,
               ),
             ),
           )
