@@ -2,6 +2,7 @@ import 'package:calendar_scheduler/component/schedule_bottom_sheet.dart';
 import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:calendar_scheduler/const/color.dart';
+import 'package:calendar_scheduler/model/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_scheduler/component/calendar.dart';
 
@@ -18,6 +19,33 @@ class _HomeScreenState extends State<HomeScreen> {
     DateTime.now().month,
     DateTime.now().day,
   );
+
+  /// {
+  ///   2023-11-23:[Schedule, Schedule],
+  ///   2023-11-24:[Schedule, Schedule]
+  /// }
+  Map<DateTime, List<Schedule>> schedules = {
+    DateTime.utc(2025, 8, 30): [
+      Schedule(
+        id: 1,
+        startTime: 11,
+        endTime: 12,
+        content: 'Flutter 공부하기',
+        date: DateTime.utc(2025, 3, 8),
+        color: categoryColors[0],
+        createdAt: DateTime.now().toUtc(),
+      ),
+      Schedule(
+        id: 2,
+        startTime: 14,
+        endTime: 16,
+        content: 'Spring 공부하기',
+        date: DateTime.utc(2025, 3, 8),
+        color: categoryColors[2],
+        createdAt: DateTime.now().toUtc(),
+      ),
+    ],
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +90,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   top: 16.0,
                 ),
                 child: ListView(
-                  children: [
-                    ScheduleCard(
-                      startTime: DateTime(2024, 03, 19, 11),
-                      endTime: DateTime(2024, 03, 19, 12),
-                      content: '플러터 공부하기',
-                      color: Colors.blue,
-                    ),
-                  ],
+                  children: schedules.containsKey(selectedDay)
+                      ? schedules[selectedDay]!
+                            .map(
+                              (e) => ScheduleCard(
+                                startTime: e.startTime,
+                                endTime: e.endTime,
+                                content: e.content,
+                                color: Color(
+                                  int.parse('FF${e.color}', radix: 16),
+                                ),
+                              ),
+                            )
+                            .toList()
+                      : List.empty(),
                 ),
               ),
             ),
