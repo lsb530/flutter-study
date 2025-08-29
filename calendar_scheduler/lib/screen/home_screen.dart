@@ -1,4 +1,4 @@
-import 'package:calendar_scheduler/component/custom_text_field.dart';
+import 'package:calendar_scheduler/component/schedule_bottom_sheet.dart';
 import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:calendar_scheduler/const/color.dart';
@@ -30,75 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
           showModalBottomSheet(
             context: context,
             builder: (_) {
-              return SafeArea(
-                bottom: true,
-                child: Container(
-                  color: Colors.white,
-                  height: 600,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: 8.0,
-                      right: 8.0,
-                      top: 16.0,
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: CustomTextField(
-                                label: '시작 시간',
-                              ),
-                            ),
-                            SizedBox(width: 16.0),
-                            Expanded(
-                              child: CustomTextField(
-                                label: '마감 시간',
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 8.0,
-                        ),
-                        Expanded(
-                          child: CustomTextField(
-                            label: '내용',
-                            expand: true,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8.0,
-                        ),
-                        Row(
-                          children: categoryColors
-                              .map(
-                                (e) => Padding(
-                                  padding: EdgeInsets.only(
-                                    right: 8.0,
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Color(
-                                        int.parse(
-                                          'FF$e',
-                                          radix: 16,
-                                        ),
-                                      ),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    width: 32.0,
-                                    height: 32.0,
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
+              return ScheduleBottomSheet();
             },
           );
         },
