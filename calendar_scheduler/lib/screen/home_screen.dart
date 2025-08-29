@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   right: 16.0,
                   top: 16.0,
                 ),
-                child: ListView.builder(
+                child: ListView.separated(
                   itemCount: schedules.containsKey(selectedDay)
                       ? schedules[selectedDay]!.length
                       : 0,
@@ -108,6 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     );
+                  },
+
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(height: 8.0);
                   },
                 ),
               ),
