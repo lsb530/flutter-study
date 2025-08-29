@@ -1,5 +1,6 @@
 import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
+import 'package:calendar_scheduler/const/color.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_scheduler/component/calendar.dart';
 
@@ -23,6 +24,29 @@ class _HomeScreenState extends State<HomeScreen> {
     final firstDayOfCurrentMonth = DateTime(now.year, now.month, 1);
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) {
+              return Container(
+                color: Colors.white,
+                height: 600,
+                child: Column(
+                  children: [
+
+                  ],
+                ),
+              );
+            },
+          );
+        },
+        backgroundColor: primaryColor,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -47,8 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ListView(
                   children: [
                     ScheduleCard(
-                      startTime: DateTime(2024,03,19,11),
-                      endTime: DateTime(2024,03,19,12),
+                      startTime: DateTime(2024, 03, 19, 11),
+                      endTime: DateTime(2024, 03, 19, 12),
                       content: '플러터 공부하기',
                       color: Colors.blue,
                     ),
