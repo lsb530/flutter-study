@@ -10,6 +10,13 @@ class ScheduleBottomSheet extends StatefulWidget {
 }
 
 class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
+  final GlobalKey<FormState> formKey = GlobalKey();
+
+  int? startTime;
+  int? endTime;
+  String? content;
+  String? category;
+
   String selectedColor = categoryColors.first;
 
   @override
@@ -25,6 +32,7 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
             top: 16.0,
           ),
           child: Form(
+            key: formKey,
             child: Column(
               children: [
                 _Time(
@@ -48,7 +56,9 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
                   },
                 ),
                 SizedBox(height: 8.0),
-                _SaveButton(),
+                _SaveButton(
+                  onPressed: onSavePressed,
+                ),
               ],
             ),
           ),
@@ -58,11 +68,19 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
   }
 
   void onStartTimeSaved(String? val) {
+    if (val == null) {
+      return;
+    }
 
+    startTime = int.parse(val);
   }
 
   void onEndTimeSaved(String? val) {
+    if (val == null) {
+      return;
+    }
 
+    endTime = int.parse(val);
   }
 
   String? onStartTimeValidate(String? val) {
@@ -74,11 +92,24 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
   }
 
   void onContentSaved(String? val) {
+    if (val == null) {
+      return;
+    }
 
+    content = val;
   }
 
   String? onContentValidate(String? val) {
 
+  }
+
+  void onSavePressed() {
+    formKey.currentState!.save();
+
+    print(startTime);
+    print(endTime);
+    print(content);
+    print(category);
   }
 }
 
@@ -198,7 +229,12 @@ class _Categories extends StatelessWidget {
 }
 
 class _SaveButton extends StatelessWidget {
-  const _SaveButton({super.key});
+  final VoidCallback onPressed;
+
+  const _SaveButton({
+    required this.onPressed,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +242,7 @@ class _SaveButton extends StatelessWidget {
       children: [
         Expanded(
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: onPressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: primaryColor,
               foregroundColor: Colors.white,
