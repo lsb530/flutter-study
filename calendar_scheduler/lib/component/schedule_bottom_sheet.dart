@@ -64,7 +64,9 @@ class _Time extends StatelessWidget {
               Expanded(
                 child: CustomTextField(
                   label: '시작 시간',
-                  onSaved: (String? val) {},
+                  onSaved: (String? val) {
+                    print('시작 시간 onSaved $val');
+                  },
                   validator: (String? val) {
                     print('시작 시간 validate');
                     // return null;
@@ -76,7 +78,9 @@ class _Time extends StatelessWidget {
               Expanded(
                 child: CustomTextField(
                   label: '마감 시간',
-                  onSaved: (String? val) {},
+                  onSaved: (String? val) {
+                    print('마감 시간 onSaved $val');
+                  },
                   validator: (String? val) {
                     print('마감 시간 validate');
                     // return null;
@@ -88,10 +92,10 @@ class _Time extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              final validate = formKey.currentState!.validate();
-              print('---validate---');
-              print(validate);
-              // formKey.currentState!.save();
+              // final validate = formKey.currentState!.validate();
+              // print('---validate---');
+              // print(validate);
+              formKey.currentState!.save();
             },
             child: Text('save'),
           ),
