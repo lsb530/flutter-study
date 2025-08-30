@@ -49,24 +49,54 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
 }
 
 class _Time extends StatelessWidget {
-  const _Time({super.key});
+  final GlobalKey<FormState> formKey = GlobalKey();
+
+  _Time({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: CustomTextField(
-            label: '시작 시간',
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextField(
+                  label: '시작 시간',
+                  onSaved: (String? val) {},
+                  validator: (String? val) {
+                    print('시작 시간 validate');
+                    // return null;
+                    return '시작 시간 오류!';
+                  },
+                ),
+              ),
+              SizedBox(width: 16.0),
+              Expanded(
+                child: CustomTextField(
+                  label: '마감 시간',
+                  onSaved: (String? val) {},
+                  validator: (String? val) {
+                    print('마감 시간 validate');
+                    // return null;
+                    return '마감 시간 오류!';
+                  },
+                ),
+              ),
+            ],
           ),
-        ),
-        SizedBox(width: 16.0),
-        Expanded(
-          child: CustomTextField(
-            label: '마감 시간',
+          ElevatedButton(
+            onPressed: () {
+              final validate = formKey.currentState!.validate();
+              print('---validate---');
+              print(validate);
+              // formKey.currentState!.save();
+            },
+            child: Text('save'),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -80,6 +110,8 @@ class _Content extends StatelessWidget {
       child: CustomTextField(
         label: '내용',
         expand: true,
+        onSaved: (String? val) {},
+        validator: (String? val) {},
       ),
     );
   }
