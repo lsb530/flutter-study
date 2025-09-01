@@ -13,11 +13,6 @@ void main() async {
 
   GetIt.I.registerSingleton<AppDateBase>(database);
 
-  final resp = await database.getSchedules();
-
-  print('------------------------');
-  print(resp);
-
   runApp(
     MaterialApp(
       theme: ThemeData(

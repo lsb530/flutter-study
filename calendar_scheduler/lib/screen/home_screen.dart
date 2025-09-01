@@ -2,9 +2,11 @@ import 'package:calendar_scheduler/component/schedule_bottom_sheet.dart';
 import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:calendar_scheduler/const/color.dart';
+import 'package:calendar_scheduler/database/drift.dart';
 import 'package:calendar_scheduler/model/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_scheduler/component/calendar.dart';
+import 'package:get_it/get_it.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -62,9 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           );
 
-          if (schedule == null) {
-            return;
-          }
+          setState(() { });
 
           // 방법1
           /*
@@ -122,41 +122,53 @@ class _HomeScreenState extends State<HomeScreen> {
                   right: 16.0,
                   top: 16.0,
                 ),
-                child: ListView.separated(
-                  // itemCount: schedules.containsKey(selectedDay)
-                  //     ? schedules[selectedDay]!.length
-                  //     : 0,
-                  itemCount: 0,
-                  itemBuilder: (BuildContext context, int index) {
-                    // final selectedSchedules = schedules[selectedDay]!;
-                    // final scheduleModel = selectedSchedules[index];
-
-                    return ScheduleCard(
-                      // startTime: scheduleModel.startTime,
-                      // endTime: scheduleModel.endTime,
-                      // content: scheduleModel.content,
-                      // color: Color(
-                      //   int.parse(
-                      //     'FF${scheduleModel.color}',
-                      //     radix: 16,
-                      //   ),
-                      // ),
-
-                      startTime: 12,
-                      endTime: 14,
-                      content: 'test',
-                      color: Color(
-                        int.parse(
-                          'FF000000',
-                          radix: 16,
+                child: FutureBuilder<List<ScheduleTableData>>(
+                  future: GetIt.I<AppDateBase>().getSchedules(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          snapshot.error.toString(),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    }
 
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(height: 8.0);
-                  },
+                    if (!snapshot.hasData
+                        && snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+                    final schedules = snapshot.data!;
+                    
+                    final selectedSchedules = schedules.where(
+                        (e) => e.date.isAtSameMomentAs(selectedDay),
+                    ).toList();
+
+                    return ListView.separated(
+                      itemCount: selectedSchedules.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final schedule = selectedSchedules[index];
+
+                        return ScheduleCard(
+                          startTime: schedule.startTime,
+                          endTime: schedule.endTime,
+                          content: schedule.content,
+                          color: Color(
+                            int.parse(
+                              'FF${schedule.color}',
+                              radix: 16,
+                            ),
+                          ),
+                        );
+                      },
+
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(height: 8.0);
+                      },
+                    );
+                  }
                 ),
               ),
             ),
