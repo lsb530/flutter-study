@@ -1,3 +1,5 @@
+import 'package:calendar_scheduler/const/color.dart';
+import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_scheduler/screen/home_screen.dart';
 import 'package:get_it/get_it.dart';
@@ -12,6 +14,18 @@ void main() async {
   final database = AppDateBase();
 
   GetIt.I.registerSingleton<AppDateBase>(database);
+
+  final colors = await database.getCategories();
+
+  if (colors.isEmpty) {
+    for(String hexCode in categoryColors) {
+      await database.createCategory(
+        CategoryTableCompanion(
+          color: Value(hexCode),
+        )
+      );
+    }
+  }
 
   runApp(
     MaterialApp(

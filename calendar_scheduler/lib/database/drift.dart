@@ -19,6 +19,12 @@ part 'drift.g.dart';
 class AppDateBase extends _$AppDateBase {
   AppDateBase() : super(_openConnection());
 
+  Future<int> createCategory(CategoryTableCompanion data) =>
+      into(categoryTable).insert(data);
+
+  Future<List<CategoryTableData>> getCategories() =>
+      select(categoryTable).get();
+
   Future<ScheduleWithCategory> getScheduleById(int id) {
     final query = select(scheduleTable).join(
       [
