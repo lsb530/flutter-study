@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:calendar_scheduler/model/category.dart';
 import 'package:calendar_scheduler/model/schedule.dart';
+import 'package:calendar_scheduler/model/schedule_with_category.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,27 +10,52 @@ import 'package:sqlite3/sqlite3.dart';
 
 part 'drift.g.dart';
 
-@DriftDatabase(tables: [
-  ScheduleTable,
-  CategoryTable,
-])
+@DriftDatabase(
+  tables: [
+    ScheduleTable,
+    CategoryTable,
+  ],
+)
 class AppDateBase extends _$AppDateBase {
   AppDateBase() : super(_openConnection());
 
-  Future<ScheduleTableData> getScheduleById(int id) =>
-      (select(scheduleTable)..where((table) => table.id.equals(id))).getSingle();
+  Future<ScheduleTableData> getScheduleById(int id) => (select(
+    scheduleTable,
+  )..where((table) => table.id.equals(id))).getSingle();
 
-  Future<int> updateScheduleById(int id, ScheduleTableCompanion data)
-  => (update(scheduleTable)..where((table) => table.id.equals(id))).write(data);
+  Future<int> updateScheduleById(int id, ScheduleTableCompanion data) =>
+      (update(
+        scheduleTable,
+      )..where((table) => table.id.equals(id))).write(data);
 
   Future<List<ScheduleTableData>> getSchedules(
     DateTime date,
   ) => (select(scheduleTable)..where((table) => table.date.equals(date))).get();
 
-  Stream<List<ScheduleTableData>> streamSchedules(
+  Stream<List<ScheduleWithCategory>> streamSchedules(
     DateTime date,
-  ) =>
-      (select(scheduleTable)
+  ) {
+    final query = select(scheduleTable).join(
+      [
+        innerJoin(
+          categoryTable,
+          categoryTable.id.equalsExp(scheduleTable.colorId),
+        ),
+      ],
+    )..where(scheduleTable.date.equals(date));
+
+    return query.map((row) {
+      final schedule = row.readTable(scheduleTable);
+      final category = row.readTable(categoryTable);
+
+      return ScheduleWithCategory(
+        category: category,
+        schedule: schedule,
+      );
+    }).watch();
+
+    /*
+     (select(scheduleTable)
             ..where((table) => table.date.equals(date))
             ..orderBy([
               (table) => OrderingTerm(
@@ -42,6 +68,8 @@ class AppDateBase extends _$AppDateBase {
               ),
             ]))
           .watch();
+     */
+  }
 
   Future<int> createSchedule(ScheduleTableCompanion data) =>
       into(scheduleTable).insert(data);
