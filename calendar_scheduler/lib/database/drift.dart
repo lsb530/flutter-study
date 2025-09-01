@@ -111,7 +111,22 @@ class AppDateBase extends _$AppDateBase {
           .go();
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 3;
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onUpgrade: (Migrator m, int from, int to) async {
+        if (from < 2) {
+          await m.addColumn(categoryTable, categoryTable.randomNumber);
+        }
+
+        if (from < 3) {
+          await m.addColumn(categoryTable, categoryTable.randomNumber2);
+        }
+      },
+    );
+  }
 }
 
 LazyDatabase _openConnection() {
