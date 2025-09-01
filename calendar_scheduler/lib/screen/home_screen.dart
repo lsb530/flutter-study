@@ -96,8 +96,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Dismissible(
                           key: ObjectKey(schedule.id),
                           direction: DismissDirection.endToStart,
-                          onDismissed: (DismissDirection direction) {
-                            print('삭제할 때 실행되는 콜백');
+                          onDismissed: (DismissDirection direction) async {
+                            await GetIt.I<AppDateBase>().removeSchedule(
+                              schedule.id,
+                            );
+                            setState(() { });
                           },
                           child: ScheduleCard(
                             startTime: schedule.startTime,
