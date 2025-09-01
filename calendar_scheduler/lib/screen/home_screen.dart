@@ -22,33 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
     DateTime.now().day,
   );
 
-  /// {
-  ///   2023-11-23:[Schedule, Schedule],
-  ///   2023-11-24:[Schedule, Schedule]
-  /// }
-  // Map<DateTime, List<ScheduleTable>> schedules = {
-  //   DateTime.utc(2025, 8, 30): [
-  //     ScheduleTable(
-  //       id: 1,
-  //       startTime: 11,
-  //       endTime: 12,
-  //       content: 'Flutter 공부하기',
-  //       date: DateTime.utc(2025, 3, 8),
-  //       color: categoryColors[0],
-  //       createdAt: DateTime.now().toUtc(),
-  //     ),
-  //     ScheduleTable(
-  //       id: 2,
-  //       startTime: 14,
-  //       endTime: 16,
-  //       content: 'Spring 공부하기',
-  //       date: DateTime.utc(2025, 3, 8),
-  //       color: categoryColors[2],
-  //       createdAt: DateTime.now().toUtc(),
-  //     ),
-  //   ],
-  // };
-
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
@@ -57,43 +30,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final schedule = await showModalBottomSheet<ScheduleTable>(
+          await showModalBottomSheet<ScheduleTable>(
             context: context,
             builder: (_) {
               return ScheduleBottomSheet(selectedDay: selectedDay);
             },
           );
 
-          setState(() { });
-
-          // 방법1
-          /*
-          final dateExists = schedules.containsKey(schedule.date);
-
-          final List<Schedule> existingSchedules = dateExists
-              ? schedules[schedule.date]!
-              : [];
-          existingSchedules.add(schedule);
-
-          setState(() {
-            schedules = {
-              ...schedules,
-              schedule.date: existingSchedules,
-            };
-          });
-          */
-
-          // 방법2
-          // setState(() {
-          //   schedules = {
-          //     ...schedules,
-          //     schedule.date: [
-          //       if (schedules.containsKey(schedule.date))
-          //         ...schedules[schedule.date]!,
-          //       schedule,
-          //     ],
-          //   };
-          // });
+          setState(() {});
         },
         backgroundColor: primaryColor,
         child: Icon(
@@ -123,7 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   top: 16.0,
                 ),
                 child: FutureBuilder<List<ScheduleTableData>>(
-                  future: GetIt.I<AppDateBase>().getSchedules(),
+                  future: GetIt.I<AppDateBase>().getSchedules(
+                    selectedDay,
+                  ),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(
@@ -133,23 +79,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }
 
-                    if (!snapshot.hasData
-                        && snapshot.connectionState == ConnectionState.waiting) {
+                    if (!snapshot.hasData &&
+                        snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
                     }
 
                     final schedules = snapshot.data!;
-                    
-                    final selectedSchedules = schedules.where(
-                        (e) => e.date.isAtSameMomentAs(selectedDay),
-                    ).toList();
 
                     return ListView.separated(
-                      itemCount: selectedSchedules.length,
+                      itemCount: schedules.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final schedule = selectedSchedules[index];
+                        final schedule = schedules[index];
 
                         return ScheduleCard(
                           startTime: schedule.startTime,
@@ -168,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         return SizedBox(height: 8.0);
                       },
                     );
-                  }
+                  },
                 ),
               ),
             ),
