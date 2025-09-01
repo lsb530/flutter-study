@@ -14,13 +14,7 @@ class AppDateBase extends _$AppDateBase {
 
   Future<List<ScheduleTableData>> getSchedules(
     DateTime date,
-  ) {
-    final selectQuery = select(scheduleTable);
-
-    selectQuery.where((table) => table.date.equals(date));
-
-    return selectQuery.get();
-  }
+  ) => (select(scheduleTable)..where((table) => table.date.equals(date))).get();
 
   Future<int> createSchedule(ScheduleTableCompanion data) =>
       into(scheduleTable).insert(data);
