@@ -40,7 +40,7 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
       final resp = await GetIt.I<AppDateBase>().getScheduleById(widget.id!);
 
       setState(() {
-        selectedColor = resp.color;
+        selectedColor = resp.category.color;
       });
     }
   }
@@ -60,7 +60,7 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
           );
         }
 
-        final data = snapshot.data;
+        final data = snapshot.data?.schedule;
 
         return Container(
           color: Colors.white,
@@ -198,7 +198,7 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
             endTime: Value(endTime!),
             content: Value(content!),
             date: Value(widget.selectedDay),
-            color: Value(selectedColor),
+            colorId: Value(selectedColor),
           ),
         );
       } else {
@@ -209,7 +209,7 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
             endTime: Value(endTime!),
             content: Value(content!),
             date: Value(widget.selectedDay),
-            color: Value(selectedColor),
+            colorId: Value(selectedColor),
           ),
         );
       }

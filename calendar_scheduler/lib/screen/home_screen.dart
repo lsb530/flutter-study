@@ -4,6 +4,7 @@ import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:calendar_scheduler/const/color.dart';
 import 'package:calendar_scheduler/database/drift.dart';
 import 'package:calendar_scheduler/model/schedule.dart';
+import 'package:calendar_scheduler/model/schedule_with_category.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_scheduler/component/calendar.dart';
 import 'package:get_it/get_it.dart';
@@ -66,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   right: 16.0,
                   top: 16.0,
                 ),
-                child: StreamBuilder<List<ScheduleTableData>>(
+                child: StreamBuilder<List<ScheduleWithCategory>>(
                   stream: GetIt.I<AppDateBase>().streamSchedules(
                     selectedDay,
                   ),
@@ -90,7 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     return ListView.separated(
                       itemCount: schedules.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final schedule = schedules[index];
+                        final scheduleWithCategory = schedules[index];
+                        final schedule = scheduleWithCategory.schedule;
+                        final category = scheduleWithCategory.category;
 
                         return Dismissible(
                           key: ObjectKey(schedule.id),
@@ -118,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               content: schedule.content,
                               color: Color(
                                 int.parse(
-                                  'FF${schedule.color}',
+                                  'FF${category.color}',
                                   radix: 16,
                                 ),
                               ),
