@@ -191,15 +191,28 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
 
       final database = GetIt.I<AppDateBase>();
 
-      await database.createSchedule(
-        ScheduleTableCompanion(
-          startTime: Value(startTime!),
-          endTime: Value(endTime!),
-          content: Value(content!),
-          date: Value(widget.selectedDay),
-          color: Value(selectedColor),
-        ),
-      );
+      if (widget.id == null) {
+        await database.createSchedule(
+          ScheduleTableCompanion(
+            startTime: Value(startTime!),
+            endTime: Value(endTime!),
+            content: Value(content!),
+            date: Value(widget.selectedDay),
+            color: Value(selectedColor),
+          ),
+        );
+      } else {
+        await database.updateScheduleById(
+          widget.id!,
+          ScheduleTableCompanion(
+            startTime: Value(startTime!),
+            endTime: Value(endTime!),
+            content: Value(content!),
+            date: Value(widget.selectedDay),
+            color: Value(selectedColor),
+          ),
+        );
+      }
 
       Navigator.of(context).pop();
     }
