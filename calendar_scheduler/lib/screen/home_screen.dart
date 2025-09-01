@@ -96,11 +96,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Dismissible(
                           key: ObjectKey(schedule.id),
                           direction: DismissDirection.endToStart,
-                          onDismissed: (DismissDirection direction) async {
+                          confirmDismiss: (DismissDirection direction) async {
                             await GetIt.I<AppDateBase>().removeSchedule(
                               schedule.id,
                             );
+
                             setState(() { });
+
+                            return true;
                           },
                           child: ScheduleCard(
                             startTime: schedule.startTime,
