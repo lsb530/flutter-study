@@ -33,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
           await showModalBottomSheet<ScheduleTable>(
             context: context,
             builder: (_) {
-              return ScheduleBottomSheet(selectedDay: selectedDay);
+              return ScheduleBottomSheet(
+                selectedDay: selectedDay,
+              );
             },
           );
         },
@@ -98,14 +100,27 @@ class _HomeScreenState extends State<HomeScreen> {
                               schedule.id,
                             );
                           },
-                          child: ScheduleCard(
-                            startTime: schedule.startTime,
-                            endTime: schedule.endTime,
-                            content: schedule.content,
-                            color: Color(
-                              int.parse(
-                                'FF${schedule.color}',
-                                radix: 16,
+                          child: GestureDetector(
+                            onTap: () async {
+                              await showModalBottomSheet<ScheduleTable>(
+                                context: context,
+                                builder: (_) {
+                                  return ScheduleBottomSheet(
+                                    selectedDay: selectedDay,
+                                    id: schedule.id,
+                                  );
+                                },
+                              );
+                            },
+                            child: ScheduleCard(
+                              startTime: schedule.startTime,
+                              endTime: schedule.endTime,
+                              content: schedule.content,
+                              color: Color(
+                                int.parse(
+                                  'FF${schedule.color}',
+                                  radix: 16,
+                                ),
                               ),
                             ),
                           ),
