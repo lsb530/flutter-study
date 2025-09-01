@@ -36,8 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
               return ScheduleBottomSheet(selectedDay: selectedDay);
             },
           );
-
-          setState(() {});
         },
         backgroundColor: primaryColor,
         child: Icon(
@@ -66,8 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   right: 16.0,
                   top: 16.0,
                 ),
-                child: FutureBuilder<List<ScheduleTableData>>(
-                  future: GetIt.I<AppDateBase>().getSchedules(
+                child: StreamBuilder<List<ScheduleTableData>>(
+                  stream: GetIt.I<AppDateBase>().streamSchedules(
                     selectedDay,
                   ),
                   builder: (context, snapshot) {
@@ -79,8 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }
 
-                    if (!snapshot.hasData &&
-                        snapshot.connectionState == ConnectionState.waiting) {
+                    if (snapshot.data == null) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
@@ -96,14 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Dismissible(
                           key: ObjectKey(schedule.id),
                           direction: DismissDirection.endToStart,
-                          confirmDismiss: (DismissDirection direction) async {
-                            await GetIt.I<AppDateBase>().removeSchedule(
+                          onDismissed: (DismissDirection direction) {
+                            GetIt.I<AppDateBase>().removeSchedule(
                               schedule.id,
                             );
-
-                            setState(() { });
-
-                            return true;
                           },
                           child: ScheduleCard(
                             startTime: schedule.startTime,
