@@ -93,14 +93,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (BuildContext context, int index) {
                         final schedule = schedules[index];
 
-                        return ScheduleCard(
-                          startTime: schedule.startTime,
-                          endTime: schedule.endTime,
-                          content: schedule.content,
-                          color: Color(
-                            int.parse(
-                              'FF${schedule.color}',
-                              radix: 16,
+                        return Dismissible(
+                          key: ObjectKey(schedule.id),
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (DismissDirection direction) {
+                            print('삭제할 때 실행되는 콜백');
+                          },
+                          child: ScheduleCard(
+                            startTime: schedule.startTime,
+                            endTime: schedule.endTime,
+                            content: schedule.content,
+                            color: Color(
+                              int.parse(
+                                'FF${schedule.color}',
+                                radix: 16,
+                              ),
                             ),
                           ),
                         );
