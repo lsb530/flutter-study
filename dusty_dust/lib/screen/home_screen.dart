@@ -16,8 +16,8 @@ class HomeScreen extends StatelessWidget {
         child: FutureBuilder(
           future: StatRepository.fetchData(),
           builder: (context, snapshot) {
-            print(snapshot.error);
-            print(snapshot.data);
+            // print(snapshot.error);
+            // print(snapshot.data);
 
             if (snapshot.hasData) {
               print(snapshot.data!['response']['body']['totalCount']);

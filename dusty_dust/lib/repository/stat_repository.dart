@@ -1,11 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final apiUrl = dotenv.env['API_URL'];
+final serviceKey = dotenv.env['SERVICE_KEY'];
 
 class StatRepository {
   static Future<Map<String, dynamic>> fetchData() async {
     final response = await Dio().get(
-      'http://apis.data.go.kr/B552584/ArpltnStatsSvc/getCtprvnMesureLIst',
+      '$apiUrl',
       queryParameters: {
-        'serviceKey': '',
+        'serviceKey': '$serviceKey',
         'returnType': 'json',
         'numOfRows': 100,
         'pageNo': 1,

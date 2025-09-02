@@ -15,6 +15,7 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   dio: ^5.9.0
+  flutter_dotenv: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -28,6 +29,7 @@ flutter:
 
   assets:
     - asset/img/
+    - .env
 
   fonts:
     - family: sunFlower
