@@ -15,7 +15,7 @@ class CustomScrollViewScreen extends StatelessWidget {
             title: Text('CustomScrollViewScreen'),
             backgroundColor: Colors.blue[200],
           ),
-          renderBuilderSliverList(),
+          renderSliverGridBuilder(),
         ],
       ),
     );
@@ -103,6 +103,43 @@ class CustomScrollViewScreen extends StatelessWidget {
           );
         },
         childCount: 10, // Optional
+      ),
+    );
+  }
+
+  /// 3) GridView.count 유사
+  SliverGrid renderChildSliverGrid() {
+    return SliverGrid(
+      delegate: SliverChildListDelegate(
+        numbers
+            .map(
+              (e) => renderContainer(
+                color: rainbowColors[e % rainbowColors.length],
+                index: e,
+              ),
+            )
+            .toList(),
+      ),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+    );
+  }
+
+  /// 4) GridView.builder 유사
+  SliverGrid renderSliverGridBuilder() {
+    return SliverGrid(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          return renderContainer(
+            color: rainbowColors[index % rainbowColors.length],
+            index: index,
+          );
+        },
+        childCount: 31, // Optional
+      ),
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 150,
       ),
     );
   }
