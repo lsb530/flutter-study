@@ -5,6 +5,11 @@ class MainStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ts = TextStyle(
+      color: Colors.white,
+      fontSize: 40.0,
+    );
+
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
@@ -12,16 +17,13 @@ class MainStat extends StatelessWidget {
           children: [
             Text(
               '서울',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 40.0,
+              style: ts.copyWith(
                 fontWeight: FontWeight.w700,
               ),
             ),
             Text(
               '2025-09-02 11:00',
-              style: TextStyle(
-                color: Colors.white,
+              style: ts.copyWith(
                 fontSize: 20.0,
               ),
             ),
@@ -33,16 +35,13 @@ class MainStat extends StatelessWidget {
             SizedBox(height: 20.0),
             Text(
               '보통',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 40.0,
+              style: ts.copyWith(
                 fontWeight: FontWeight.w700,
               ),
             ),
             Text(
               '나쁘지 않네요!',
-              style: TextStyle(
-                color: Colors.white,
+              style: ts.copyWith(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w700,
               ),
