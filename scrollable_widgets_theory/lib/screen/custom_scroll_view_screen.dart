@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:scrollable_widgets_theory/const/colors.dart';
 
@@ -11,10 +13,7 @@ class CustomScrollViewScreen extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            title: Text('CustomScrollViewScreen'),
-            backgroundColor: Colors.blue[200],
-          ),
+          renderSliverAppbar(),
           renderSliverGridBuilder(),
         ],
       ),
@@ -141,6 +140,36 @@ class CustomScrollViewScreen extends StatelessWidget {
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 150,
       ),
+    );
+  }
+
+  /// 5) SliverAppBar(pinned, floating, snap, stretch, expandedHeight, collapsedHeight, flexibleSpace)
+  SliverAppBar renderSliverAppbar() {
+    final int random = Random().nextInt(5) + 1;
+
+    return SliverAppBar(
+      title: Text('CustomScrollViewScreen'),
+      // 고정된 상태로 나옴(기본값: false)
+      pinned: false,
+      // 아래로 스크롤할때는 사라지다가 위로 스크롤 할때는 생김(기본값: false)
+      floating: true,
+      // 자석효과. false일때는 애니메이션이 사라져서 중간 크기 렌더링 가능(floating true여야만 효과를 볼 수 있음)
+      snap: false,
+      // 맨 위에서 한계 이상으로 스크롤 할 경우 남는 공간을 차지(기본값: false)
+      stretch: true,
+      // 기본 높이(확장된)
+      expandedHeight: 200,
+      // 닫힐 때의 높이(작으면 더 빨리 닫힘)
+      collapsedHeight: 150,
+      // 닫힐 때 공간을 차지할 것(위젯도 넣을 수 있음)
+      flexibleSpace: FlexibleSpaceBar(
+        background: Image.asset(
+          'asset/img/image_$random.jpeg',
+          fit: BoxFit.cover,
+        ),
+        title: Text('FlexibleSpace'),
+      ),
+      backgroundColor: Colors.blue[200],
     );
   }
 }
