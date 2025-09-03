@@ -5,6 +5,7 @@ description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
+isar_version: &isar_version 3.1.0
 
 environment:
   sdk: ^3.9.0
@@ -16,21 +17,24 @@ dependencies:
   cupertino_icons: ^1.0.8
   dio: ^5.9.0
   flutter_dotenv: ^6.0.0
+  isar: *isar_version
+  isar_flutter_libs: *isar_version
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^5.0.0
+  isar_generator: *isar_version
+#  build_runner: ^2.7.2
+  build_runner: any
 
 flutter:
-
   uses-material-design: true
-
   assets:
     - asset/img/
     - .env
-
   fonts:
     - family: sunFlower
       fonts:
