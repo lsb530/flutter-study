@@ -22,6 +22,10 @@
     "dataGubun": "1",
  */
 
+import 'package:isar/isar.dart';
+
+part 'stat_model.g.dart';
+
 enum Region {
   daegu,
   chungnam,
@@ -90,8 +94,16 @@ enum ItemCode {
   }
 }
 
+@collection
 class StatModel {
+  Id id = Isar.autoIncrement;
+
   // 지역
+  @enumerated
+  @Index(unique: true, composite: [
+    CompositeIndex('dateTime'),
+    CompositeIndex('itemCode'),
+  ])
   final Region region;
 
   // 통계 값
@@ -101,6 +113,7 @@ class StatModel {
   final DateTime dateTime;
 
   // 미세먼지 & 초미세먼지
+  @enumerated
   final ItemCode itemCode;
 
   StatModel({
