@@ -1,8 +1,17 @@
 import 'package:dusty_dust/const/color.dart';
+import 'package:dusty_dust/model/stat_model.dart';
+import 'package:dusty_dust/util/status_util.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
 
 class CategoryStat extends StatelessWidget {
-  const CategoryStat({super.key});
+  final Region region;
+
+  const CategoryStat({
+    required this.region,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +63,54 @@ class CategoryStat extends StatelessWidget {
                       child: ListView(
                         physics: PageScrollPhysics(),
                         scrollDirection: Axis.horizontal,
-                        children: List.generate(
+                        children: ItemCode.values
+                            .map(
+                              (itemCode) => FutureBuilder(
+                                future: GetIt.I<Isar>().statModels
+                                    .filter()
+                                    .regionEqualTo(region)
+                                    .itemCodeEqualTo(itemCode)
+                                    .sortByDateTimeDesc()
+                                    .findFirst(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Center(
+                                      child: Text(snapshot.error.toString()),
+                                    );
+                                  }
+
+                                  if (!snapshot.hasData) {
+                                    return Container();
+                                  }
+
+                                  final statModel = snapshot.data!;
+                                  final statusModel =
+                                      StatusUtil.getStatusModelFromStat(
+                                        statModel: statModel,
+                                      );
+
+                                  return SizedBox(
+                                    width: constraints.maxWidth / 3,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(itemCode.krName),
+                                        SizedBox(height: 8.0),
+                                        Image.asset(
+                                          statusModel.imagePath,
+                                          width: 50.0,
+                                        ),
+                                        SizedBox(height: 8.0),
+                                        Text(statModel.stat.toString()),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                            .toList(),
+                        /*                        List.generate(
                           6,
                           (index) => SizedBox(
                             // width: MediaQuery.of(context).size.width / 3,
@@ -73,7 +129,7 @@ class CategoryStat extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
+                        )*/
                       ),
                     ),
                   ),

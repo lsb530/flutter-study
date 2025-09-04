@@ -37,10 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            MainStat(
-              region: region,
-            ),
-            CategoryStat(),
+            MainStat(region: region),
+            CategoryStat(region: region),
             HourlyStat(),
           ],
         ),
