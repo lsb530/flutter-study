@@ -16,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -34,25 +33,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: primaryColor,
       body: SingleChildScrollView(
-        child: FutureBuilder(
-          future: StatRepository.fetchDataByItemCode(
-            itemCode: ItemCode.PM10,
-          ),
-          builder: (context, snapshot) {
-            print(snapshot.error);
-            print(snapshot.data);
-
-            // if (snapshot.hasData) {
-            //   print(snapshot.data!['response']['body']['totalCount']);
-            // }
-            return Column(
-              children: [
-                MainStat(),
-                CategoryStat(),
-                HourlyStat(),
-              ],
-            );
-          }
+        child: Column(
+          children: [
+            MainStat(),
+            CategoryStat(),
+            HourlyStat(),
+          ],
         ),
       ),
     );
