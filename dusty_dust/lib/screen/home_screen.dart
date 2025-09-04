@@ -21,8 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-
-    StatRepository.fetchData(itemCode: ItemCode.PM10);
+    StatRepository.fetchDate();
     getCount();
   }
 
@@ -36,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: primaryColor,
       body: SingleChildScrollView(
         child: FutureBuilder(
-          future: StatRepository.fetchData(
+          future: StatRepository.fetchDataByItemCode(
             itemCode: ItemCode.PM10,
           ),
           builder: (context, snapshot) {

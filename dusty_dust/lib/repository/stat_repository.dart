@@ -8,11 +8,15 @@ final apiUrl = dotenv.env['API_URL'];
 final serviceKey = dotenv.env['SERVICE_KEY'];
 
 class StatRepository {
-  static Future<List<StatModel>> fetchData({
+  static Future<void> fetchDate() async {
+    for (var itemCode in ItemCode.values) {
+      await fetchDataByItemCode(itemCode: itemCode);
+    }
+  }
+
+  static Future<List<StatModel>> fetchDataByItemCode({
     required ItemCode itemCode,
   }) async {
-    final itemCodeStr = itemCode == ItemCode.PM25 ? 'PM2.5' : itemCode.name;
-
     final response = await Dio().get(
       '$apiUrl',
       queryParameters: {
@@ -20,7 +24,7 @@ class StatRepository {
         'returnType': 'json',
         'numOfRows': 100,
         'pageNo': 1,
-        'itemCode': itemCodeStr,
+        'itemCode': itemCode.name,
         'dataGubun': 'HOUR',
         'searchCondition': 'WEEK',
       },
