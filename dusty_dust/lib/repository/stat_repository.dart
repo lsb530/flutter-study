@@ -40,28 +40,39 @@ class StatRepository {
     List<StatModel> stats = [];
 
     for (Map<String, dynamic> item in rawItemsList) {
-      final dateTime = item['dataTime'];
-
       for (String key in item.keys) {
         if (skipKeys.contains(key)) {
           continue;
         }
 
         final regionStr = key;
-        final stat = item[key];
+        final region = Region.values.firstWhere((e) => e.name == regionStr);
+        final stat = double.parse(item[regionStr]);
+        final dateTime = DateTime.parse(item['dataTime']);
 
         final statModel = StatModel()
-        ..region = Region.values.firstWhere((e) => e.name == regionStr)
-        ..stat = double.parse(stat)
-        ..dateTime = DateTime.parse(dateTime)
-        ..itemCode = itemCode;
+          ..region = region
+          ..stat = stat
+          ..dateTime = dateTime
+          ..itemCode = itemCode;
 
         final isar = GetIt.I<Isar>();
 
+        final count = await isar.statModels
+            .filter()
+            .regionEqualTo(region)
+            .dateTimeEqualTo(dateTime)
+            .itemCodeEqualTo(itemCode)
+            .count();
+
+        if (count > 0) {
+          continue;
+        }
+
         await isar.writeTxn(
-            () async {
-              await isar.statModels.put(statModel);
-            }
+          () async {
+            await isar.statModels.put(statModel);
+          },
         );
 
         // stats = [
