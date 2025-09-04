@@ -22,6 +22,10 @@ class _AppbarUsingControllerScreenState
       length: TABS.length,
       vsync: this,
     );
+
+    tabController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -47,10 +51,37 @@ class _AppbarUsingControllerScreenState
         controller: tabController,
         children: TABS
             .map(
-              (e) => Center(
-                child: Icon(
-                  e.icon,
-                ),
+              (e) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    e.icon,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (tabController.index != 0)
+                        ElevatedButton(
+                          onPressed: () {
+                            tabController.animateTo(
+                              tabController.index - 1,
+                            );
+                          },
+                          child: Text('이전'),
+                        ),
+                      const SizedBox(width: 16.0),
+                      if (tabController.index != TABS.length - 1)
+                      ElevatedButton(
+                        onPressed: () {
+                          tabController.animateTo(
+                            tabController.index + 1,
+                          );
+                        },
+                        child: Text('다음'),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             )
             .toList(),
