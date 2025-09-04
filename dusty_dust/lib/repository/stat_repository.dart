@@ -9,6 +9,26 @@ final serviceKey = dotenv.env['SERVICE_KEY'];
 
 class StatRepository {
   static Future<void> fetchDate() async {
+    final isar = GetIt.I<Isar>();
+
+    final now = DateTime.now();
+    final compareDateTimeTarget = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      now.hour,
+    );
+
+    final count = await isar.statModels
+        .filter()
+        .dateTimeEqualTo(compareDateTimeTarget)
+        .count();
+
+    if (count > 0) {
+      print('데이터가 존재합니다: $count개');
+      return;
+    }
+
     for (var itemCode in ItemCode.values) {
       await fetchDataByItemCode(itemCode: itemCode);
     }
