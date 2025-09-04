@@ -104,22 +104,15 @@ class StatModel {
     CompositeIndex('dateTime'),
     CompositeIndex('itemCode'),
   ])
-  final Region region;
+  late Region region;
 
   // 통계 값
-  final double stat;
+  late double stat;
 
   // 날짜
-  final DateTime dateTime;
+  late DateTime dateTime;
 
   // 미세먼지 & 초미세먼지
   @enumerated
-  final ItemCode itemCode;
-
-  StatModel({
-    required this.region,
-    required this.stat,
-    required this.dateTime,
-    required this.itemCode,
-  });
+  late ItemCode itemCode;
 }

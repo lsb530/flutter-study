@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:dusty_dust/model/stat_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
 
 final apiUrl = dotenv.env['API_URL'];
 final serviceKey = dotenv.env['SERVICE_KEY'];
@@ -48,15 +50,29 @@ class StatRepository {
         final regionStr = key;
         final stat = item[key];
 
-        stats = [
-          ...stats,
-          StatModel(
-            region: Region.values.firstWhere((e) => e.name == regionStr),
-            stat: double.parse(stat),
-            dateTime: DateTime.parse(dateTime),
-            itemCode: itemCode,
-          ),
-        ];
+        final statModel = StatModel()
+        ..region = Region.values.firstWhere((e) => e.name == regionStr)
+        ..stat = double.parse(stat)
+        ..dateTime = DateTime.parse(dateTime)
+        ..itemCode = itemCode;
+
+        final isar = GetIt.I<Isar>();
+
+        await isar.writeTxn(
+            () async {
+              await isar.statModels.put(statModel);
+            }
+        );
+
+        // stats = [
+        //   ...stats,
+        //   StatModel(
+        //     region: Region.values.firstWhere((e) => e.name == regionStr),
+        //     stat: double.parse(stat),
+        //     dateTime: DateTime.parse(dateTime),
+        //     itemCode: itemCode,
+        //   ),
+        // ];
       }
     }
 
