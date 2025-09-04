@@ -14,37 +14,42 @@ class BasicAppbarTabbarScreen extends StatelessWidget {
           title: Text('BasicAppBarScreen'),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(80),
-            child: TabBar(
-              indicatorColor: Colors.red,
-              indicatorWeight: 4.0,
-              // indicatorSize: TabBarIndicatorSize.tab,
-              indicatorSize: TabBarIndicatorSize.label,
-              isScrollable: true,
-              // isScrollable: false, // 갯수가 많아지면 뭉개짐
-              tabAlignment: TabAlignment.center,
-              labelColor: Colors.green,
-              unselectedLabelColor: Colors.grey,
-              labelStyle: TextStyle(
-                fontWeight: FontWeight.w700,
-              ),
-              unselectedLabelStyle: TextStyle(
-                fontWeight: FontWeight.w200,
-              ),
-              tabs: TABS
-              // [
-              //       ...TABS,
-              //       ...TABS,
-              //       ...TABS,
-              //     ]
-                  .map(
-                    (e) => Tab(
-                  icon: Icon(e.icon),
-                  child: Text(
-                    e.label,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TabBar(
+                  indicatorColor: Colors.red,
+                  indicatorWeight: 4.0,
+                  // indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  isScrollable: true,
+                  // isScrollable: false, // 갯수가 많아지면 뭉개짐
+                  tabAlignment: TabAlignment.center,
+                  labelColor: Colors.green,
+                  unselectedLabelColor: Colors.grey,
+                  labelStyle: TextStyle(
+                    fontWeight: FontWeight.w700,
                   ),
+                  unselectedLabelStyle: TextStyle(
+                    fontWeight: FontWeight.w200,
+                  ),
+                  tabs: TABS
+                  // [
+                  //       ...TABS,
+                  //       ...TABS,
+                  //       ...TABS,
+                  //     ]
+                      .map(
+                        (e) => Tab(
+                      icon: Icon(e.icon),
+                      child: Text(
+                        e.label,
+                      ),
+                    ),
+                  )
+                      .toList(),
                 ),
-              )
-                  .toList(),
+              ],
             ),
           ),
         ),
