@@ -52,7 +52,7 @@ class MainStat extends StatelessWidget {
             return Column(
               children: [
                 Text(
-                  '서울',
+                  statModel.region.krName,
                   style: ts.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
