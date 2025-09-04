@@ -1,6 +1,8 @@
 # Flutter Study Repository
 
 ## branch별로 작업
+- Total commit counts: 309
+- CLI: `git rev-list --all --count`
 
 ## create flutter project for only mobile without linux, macos, windows, web
 ```shell
