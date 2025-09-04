@@ -91,10 +91,10 @@ class StatusModel {
   final String comment;
 
   // 미세먼지 최소치
-  final double minFM10;
+  final double minPM10;
 
   // 초미세먼지 최소치
-  final double minFM25;
+  final double minPM25;
 
   // 오존 최소치
   final double minO3;
@@ -108,7 +108,7 @@ class StatusModel {
   // 이황산가스 최소치
   final double minSO2;
 
-  StatusModel({
+  const StatusModel({
     required this.level,
     required this.label,
     required this.primaryColor,
@@ -117,11 +117,11 @@ class StatusModel {
     required this.fontColor,
     required this.imagePath,
     required this.comment,
-    required this.minFM10,
-    required this.minFM25,
+    required this.minPM10,
+    required this.minPM25,
     required this.minO3,
     required this.minNO2,
     required this.minCO,
     required this.minSO2,
-  })
+  });
 }
