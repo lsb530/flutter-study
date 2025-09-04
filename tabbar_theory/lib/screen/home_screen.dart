@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabbar_theory/screen/appbar_using_controller_screen.dart';
 import 'package:tabbar_theory/screen/basic_appbar_tabbar_screen.dart';
+import 'package:tabbar_theory/screen/bottom_with_default_tab_controller_screen.dart';
 import 'package:tabbar_theory/screen/bottom_navigation_bar_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -46,7 +47,20 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               child: Text('Bottom Navigation Bar Screen'),
-            )
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => BottomWithDefaultTabControllerScreen(),
+                  ),
+                );
+              },
+              child: Text(
+                'Bottom Navigation with Default Tab Controller Screen',
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
         ),
       ),
