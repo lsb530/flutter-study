@@ -1,7 +1,7 @@
-import 'package:dusty_dust/model/status_model.dart';
+import 'package:dusty_dust/model/status_level.dart';
 import 'package:flutter/material.dart';
 
-const statusModel = [
+const statusLevels = [
   StatusModel(
     level: 0,
     label: '최고',

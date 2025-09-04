@@ -1,3 +1,4 @@
+import 'package:dusty_dust/const/status_level.dart';
 import 'package:dusty_dust/model/stat_model.dart';
 import 'package:dusty_dust/util/date_util.dart';
 import 'package:flutter/material.dart' hide DateUtils;
@@ -5,7 +6,12 @@ import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
 class MainStat extends StatelessWidget {
-  const MainStat({super.key});
+  final Region region;
+
+  const MainStat({
+    required this.region,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +26,9 @@ class MainStat extends StatelessWidget {
         child: FutureBuilder<StatModel?>(
           future: GetIt.I<Isar>().statModels
               .filter()
-              .regionEqualTo(Region.seoul)
+              .regionEqualTo(region)
               .itemCodeEqualTo(ItemCode.PM10)
+              .sortByDateTimeDesc()
               .findFirst(),
           builder: (context, snapshot) {
             if (!snapshot.hasData &&
@@ -36,6 +43,20 @@ class MainStat extends StatelessWidget {
             }
 
             final statModel = snapshot.data!;
+
+            print(statModel.stat);
+            
+            final index = statusLevels.indexWhere(
+                (e) => statModel.stat < e.minPM10,
+            );
+
+            if (index < 0) {
+              return Center(
+                child: Text('통계 수치에 오류가 있습니다.'),
+              );
+            }
+
+            final status = statusLevels[index - 1];
 
             return Column(
               children: [
@@ -53,18 +74,18 @@ class MainStat extends StatelessWidget {
                 ),
                 SizedBox(height: 20.0),
                 Image.asset(
-                  'asset/img/good.png',
+                  status.imagePath,
                   width: MediaQuery.of(context).size.width / 2,
                 ),
                 SizedBox(height: 20.0),
                 Text(
-                  '보통',
+                  status.label,
                   style: ts.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 Text(
-                  '나쁘지 않네요!',
+                  status.comment,
                   style: ts.copyWith(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w700,
