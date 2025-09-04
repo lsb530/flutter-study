@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             MainStat(region: region),
             CategoryStat(region: region),
-            HourlyStat(),
+            HourlyStat(region: region),
           ],
         ),
       ),
