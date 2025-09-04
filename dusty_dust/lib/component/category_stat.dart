@@ -1,4 +1,3 @@
-import 'package:dusty_dust/const/color.dart';
 import 'package:dusty_dust/model/stat_model.dart';
 import 'package:dusty_dust/util/status_util.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +6,14 @@ import 'package:isar/isar.dart';
 
 class CategoryStat extends StatelessWidget {
   final Region region;
+  final Color darkColor;
+  final Color lightColor;
 
   const CategoryStat({
-    required this.region,
     super.key,
+    required this.region,
+    required this.darkColor,
+    required this.lightColor,
   });
 
   @override
@@ -110,26 +113,6 @@ class CategoryStat extends StatelessWidget {
                               ),
                             )
                             .toList(),
-                        /*                        List.generate(
-                          6,
-                          (index) => SizedBox(
-                            // width: MediaQuery.of(context).size.width / 3,
-                            width: constraints.maxWidth / 3,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('미세먼지'),
-                                SizedBox(height: 8.0),
-                                Image.asset(
-                                  'asset/img/bad.png',
-                                  width: 50.0,
-                                ),
-                                SizedBox(height: 8.0),
-                                Text('46.0'),
-                              ],
-                            ),
-                          ),
-                        )*/
                       ),
                     ),
                   ),

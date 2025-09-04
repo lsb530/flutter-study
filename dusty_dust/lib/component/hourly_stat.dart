@@ -1,4 +1,3 @@
-import 'package:dusty_dust/const/color.dart';
 import 'package:dusty_dust/model/stat_model.dart';
 import 'package:dusty_dust/util/status_util.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +6,14 @@ import 'package:isar/isar.dart';
 
 class HourlyStat extends StatelessWidget {
   final Region region;
+  final Color darkColor;
+  final Color lightColor;
 
   const HourlyStat({
-    required this.region,
     super.key,
+    required this.region,
+    required this.darkColor,
+    required this.lightColor,
   });
 
   @override
@@ -106,36 +109,6 @@ class HourlyStat extends StatelessWidget {
                               ),
                             ),
                           ),
-                          /*                          ...List.generate(
-                            24,
-                            (index) => Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 16.0,
-                                vertical: 4.0,
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      '11시',
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Image.asset(
-                                      'asset/img/best.png',
-                                      height: 20.0,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      '보통',
-                                      textAlign: TextAlign.right,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),*/
                         ],
                       ),
                     ),
