@@ -1,49 +1,62 @@
-# Flutter Study Repository
+# Riverpod Study - v1
 
-## branch별로 작업
-- Total commit counts: 309
-- CLI: `git rev-list --all --count`
+## Dependency
 
-## create flutter project for only mobile without linux, macos, windows, web
-```shell
-flutter create --platforms ios,android [프로젝트 이름]
-```
-
-## formatter
-- analysis_options.yaml
-append this under include..
 ```yaml
-formatter:
-  trailing_commas: preserve
-  page_width: 80
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_riverpod: ^1.0.4 # add
 ```
 
-## boiler plate
-- main.dart
-```dart
-import 'package:[프로젝트명]/screen/home_screen.dart';
-import 'package:flutter/material.dart';
+## Provider의 종류
 
+- Provider
+- StateProvider
+- StateNotifierProvider
+- FutureProvider
+- StreamProvider
+- ChangeNotifierProvider(x - to migrate Provider)
+
+## Table
+
+|      Provider 종류      |           반환값           |        사용예제        |
+|:---------------------:|:-----------------------:|:------------------:|
+|       Provider        |          모든 타입          |       데이터 캐싱       |
+|     StateProvider     |          모든 타입          |     간단한 상태값 관리     |
+| StateNotifierProvider | StateNotifier를 상속한 값 반환 |     복잡한 상태값 관리     |
+|    FutureProvider     |        Future 타입        | API 요청의 Future 결과값 |
+|    StreamProvider     |        Stream 타입        | API 요청의 Stream 결과값 |
+
+## ref.read vs ref.watch
+`ref.read`
+- 실행되는 순간 단 한번만 provider 값을 가져온다.
+- onPressed 콜백처럼 특정 액션 뒤에 실행되는 함수 내부에서 사용된다.
+  
+`ref.watch`
+- 반환값의 업데이트가 있을 때 지속적으로 build 함수를 다시 실행해준다.
+- 필수적으로 UI 관련 코드에만 사용한다.
+
+## Usage
+
+### Wrap Main
+
+```dart
 void main() {
   runApp(
-    MaterialApp(
-      home: HomeScreen(),
+
+    /// ProviderScope
+    ProviderScope(
+      child: MaterialApp(
+        home: HomeScreen(),
+      ),
     ),
   );
 }
 ```
-- screen/home_screen.dart
-```dart
-import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+### Create Provider
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(),
-    );
-  }
-}
-```
+### Use Provider
