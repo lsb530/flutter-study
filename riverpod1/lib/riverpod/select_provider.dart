@@ -1,6 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod1/model/shopping_item_model.dart';
 
+final selectProvider = StateNotifierProvider<SelectNotifier, ShoppingItemModel>(
+  (ref) => SelectNotifier(),
+);
+
 class SelectNotifier extends StateNotifier<ShoppingItemModel> {
   SelectNotifier()
     : super(
@@ -13,19 +17,13 @@ class SelectNotifier extends StateNotifier<ShoppingItemModel> {
       );
 
   toggleHasBought() {
-    state = ShoppingItemModel(
-      name: state.name,
-      quantity: state.quantity,
+    state = state.copyWith(
       hasBought: !state.hasBought,
-      isSpicy: state.isSpicy,
     );
   }
 
   toggleIsSpicy() {
-    state = ShoppingItemModel(
-      name: state.name,
-      quantity: state.quantity,
-      hasBought: state.hasBought,
+    state = state.copyWith(
       isSpicy: !state.isSpicy,
     );
   }
