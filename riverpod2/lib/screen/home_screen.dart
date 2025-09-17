@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod2/layout/default_layout.dart';
+import 'package:riverpod2/screen/code_generation_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,7 +10,16 @@ class HomeScreen extends StatelessWidget {
     return DefaultLayout(
       title: 'HomeScreen',
       body: ListView(
-        children: [],
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => CodeGenerationScreen()));
+            },
+            child: Text('CodeGenerationScreen'),
+          ),
+        ],
       ),
     );
   }
