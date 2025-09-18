@@ -12,8 +12,9 @@ class PopBaseScreen extends StatelessWidget {
         child: ListView(
           children: [
             ElevatedButton(
-              onPressed: () {
-                context.push('/pop/return');
+              onPressed: () async {
+                final result = await context.push('/pop/return');
+                print(result);
               },
               child: Text('Push&Pop Return Screen'),
             ),

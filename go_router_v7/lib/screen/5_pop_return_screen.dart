@@ -13,7 +13,7 @@ class PopReturnScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                context.pop();
+                context.pop('Code Boki');
               },
               child: Text('Pop'),
             ),
