@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:go_router_v7/screen/1_basic_screen.dart';
+import 'package:go_router_v7/screen/2_named_screen.dart';
 import 'package:go_router_v7/screen/root_screen.dart';
 
 final router = GoRouter(
@@ -11,6 +12,11 @@ final router = GoRouter(
         GoRoute(
           path: 'basic',
           builder: (context, state) => BasicScreen(),
+        ),
+        GoRoute(
+          path: 'named',
+          name: 'named_screen',
+          builder: (context, state) => NamedScreen(),
         ),
       ],
     ),
