@@ -4,6 +4,7 @@ import 'package:go_router_v7/screen/2_named_screen.dart';
 import 'package:go_router_v7/screen/3_push_screen.dart';
 import 'package:go_router_v7/screen/4_pop_base_screen.dart';
 import 'package:go_router_v7/screen/5_pop_return_screen.dart';
+import 'package:go_router_v7/screen/6_path_param_screen.dart';
 import 'package:go_router_v7/screen/root_screen.dart';
 
 final router = GoRouter(
@@ -32,6 +33,16 @@ final router = GoRouter(
             GoRoute(
               path: 'return',
               builder: (context, state) => PopReturnScreen(),
+            ),
+          ],
+        ),
+        GoRoute(
+          path: 'path_param/:id',
+          builder: (context, state) => PathParamScreen(),
+          routes: [
+            GoRoute(
+              path: ':name',
+              builder: (context, state) => PathParamScreen(),
             ),
           ],
         ),
