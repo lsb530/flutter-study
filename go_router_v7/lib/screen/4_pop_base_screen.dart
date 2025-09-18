@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:go_router_v7/layout/default_layout.dart';
+
+class PopBaseScreen extends StatelessWidget {
+  const PopBaseScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultLayout(
+      body: Center(
+        child: ListView(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                context.push('/pop/return');
+              },
+              child: Text('Push&Pop Return Screen'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
