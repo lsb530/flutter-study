@@ -8,9 +8,24 @@ import 'package:go_router_v7/screen/6_path_param_screen.dart';
 import 'package:go_router_v7/screen/7_query_parameter_screen.dart';
 import 'package:go_router_v7/screen/8_nested_child_screen.dart';
 import 'package:go_router_v7/screen/8_nested_screen.dart';
+import 'package:go_router_v7/screen/9_login_screen.dart';
+import 'package:go_router_v7/screen/9_private_screen.dart';
 import 'package:go_router_v7/screen/root_screen.dart';
 
+// true: login O / false: login X
+bool authState = false;
+
 final router = GoRouter(
+  redirect: (context, state) {
+    // return
+    //    string(path): 해당 라우트로 이동
+    //    null: 원래 이동하려던 라우트로 이동
+    if (state.location == '/login/private' && !authState) {
+      return '/login';
+    }
+
+    return null;
+  },
   routes: [
     GoRoute(
       path: '/',
@@ -77,6 +92,27 @@ final router = GoRouter(
               builder: (context, state) => NestedChildScreen(
                 routeName: '/nested/c',
               ),
+            ),
+          ],
+        ),
+        GoRoute(
+          path: 'login',
+          builder: (context, state) => LoginScreen(),
+          routes: [
+            GoRoute(
+              path: 'private',
+              builder: (context, state) => PrivateScreen(),
+            ),
+          ],
+        ),
+        GoRoute(
+          path: 'login2',
+          builder: (context, state) => LoginScreen(),
+          routes: [
+            GoRoute(
+              path: 'private',
+              builder: (context, state) => PrivateScreen(),
+              redirect: (context, state) => !authState ? '/login2' : null,
             ),
           ],
         ),
