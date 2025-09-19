@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:go_router_v7/screen/10_transition_screen1.dart';
+import 'package:go_router_v7/screen/10_transition_screen2.dart';
 import 'package:go_router_v7/screen/1_basic_screen.dart';
 import 'package:go_router_v7/screen/2_named_screen.dart';
 import 'package:go_router_v7/screen/3_push_screen.dart';
@@ -113,6 +116,37 @@ final router = GoRouter(
               path: 'private',
               builder: (context, state) => PrivateScreen(),
               redirect: (context, state) => !authState ? '/login2' : null,
+            ),
+          ],
+        ),
+        GoRoute(
+          path: 'transition',
+          builder: (context, state) => TransitionScreenOne(),
+          routes: [
+            GoRoute(
+              path: 'detail',
+              // builder: (context, state) => TransitionScreenTwo(),
+              pageBuilder: (_, state) => CustomTransitionPage(
+                transitionDuration: Duration(seconds: 3),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      );
+
+                      // return ScaleTransition(
+                      //   scale: animation,
+                      //   child: child,
+                      // );
+
+                      // return RotationTransition(
+                      //   turns: animation,
+                      //   child: child,
+                      // );
+                    },
+                child: TransitionScreenTwo(),
+              ),
             ),
           ],
         ),
