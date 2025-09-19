@@ -6,6 +6,8 @@ import 'package:go_router_v7/screen/4_pop_base_screen.dart';
 import 'package:go_router_v7/screen/5_pop_return_screen.dart';
 import 'package:go_router_v7/screen/6_path_param_screen.dart';
 import 'package:go_router_v7/screen/7_query_parameter_screen.dart';
+import 'package:go_router_v7/screen/8_nested_child_screen.dart';
+import 'package:go_router_v7/screen/8_nested_screen.dart';
 import 'package:go_router_v7/screen/root_screen.dart';
 
 final router = GoRouter(
@@ -50,6 +52,33 @@ final router = GoRouter(
         GoRoute(
           path: 'query_param',
           builder: (context, state) => QueryParameterScreen(),
+        ),
+        ShellRoute(
+          builder: (context, state, child) {
+            return NestedScreen(
+              child: child,
+            );
+          },
+          routes: [
+            GoRoute(
+              path: 'nested/a',
+              builder: (context, state) => NestedChildScreen(
+                routeName: '/nested/a',
+              ),
+            ),
+            GoRoute(
+              path: 'nested/b',
+              builder: (context, state) => NestedChildScreen(
+                routeName: '/nested/b',
+              ),
+            ),
+            GoRoute(
+              path: 'nested/c',
+              builder: (context, state) => NestedChildScreen(
+                routeName: '/nested/c',
+              ),
+            ),
+          ],
         ),
       ],
     ),
